@@ -2,86 +2,74 @@
 import { motion } from "framer-motion";
 
 const FEATURES = [
-  { icon: "🤖", title: "Dual AI Engine", desc: "ML models (Naive Bayes, SVM, Logistic, Random Forest) combined with Google Gemini for maximum accuracy." },
-  { icon: "⚡", title: "Real-Time Analysis", desc: "Blazing-fast inference in under 3 seconds. No queues, no waiting — just instant, on-demand detection." },
-  { icon: "🔍", title: "Explainable AI", desc: "See exactly which keywords and patterns drove the classification decision with TF-IDF importance scores." },
-  { icon: "📊", title: "90%+ Accuracy", desc: "Trained on 20K+ labeled articles from credible sources, validated on a held-out test set." },
-  { icon: "🌐", title: "REST API", desc: "Programmatic access via a clean REST API. Integrate fake-news detection into your own apps and workflows." },
-  { icon: "✨", title: "Gemini Contextual AI", desc: "Google Gemini 1.5 Flash provides credibility scoring, red-flag identification, and reader recommendations." },
+  { icon: "⚡", title: "Wait-Free Analysis", desc: "Optimized inference pipeline delivers results in under 3 seconds." },
+  { icon: "🤖", title: "Dual Intelligence", desc: "Combines 4 traditional ML models with Google's Gemini LLM." },
+  { icon: "🔍", title: "Full Transparency", desc: "See exactly why an article was flagged with keyword highlighting." },
+  { icon: "📊", title: "Dataset-Backed", desc: "Trained on 20,000+ verified articles from trusted global sources." },
+  { icon: "🌐", title: "Open API", desc: "Developers can hook into our detection engine via standard REST API." },
+  { icon: "✨", title: "Smart Context", desc: "Gemini 1.5 checks facts against its massive knowledge base." },
 ];
 
-const TECH = ["Python 3.10+", "Flask", "scikit-learn", "NLTK", "Pandas", "NumPy", "joblib", "REST API", "Gemini AI", "Next.js", "React", "Tailwind CSS"];
+const TECH = ["Python 3.10", "Flask", "scikit-learn", "NLTK", "Pandas", "Next.js 14", "React", "Tailwind CSS", "Gemini AI"];
 
 export default function About() {
   return (
-    <section id="about" className="py-16 md:py-24 bg-gradient-to-b from-transparent via-indigo-50/50 dark:via-indigo-500/[0.02] to-transparent" aria-labelledby="about-heading">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/25 text-indigo-600 dark:text-indigo-400 text-xs font-semibold uppercase tracking-widest mb-4">
-            About
-          </div>
-          <h2 id="about-heading" className="text-3xl md:text-4xl font-bold mb-3 text-slate-900 dark:text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            Why TruthLens?
-          </h2>
-          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Misinformation erodes trust and causes real harm. TruthLens combines classical machine learning
-            rigor with Google Gemini's advanced reasoning to give you a dual-perspective verdict you can count on.
-          </p>
-        </motion.div>
+    <section id="about" className="py-24 bg-white relative overflow-hidden" aria-labelledby="about-heading">
 
-        {/* Feature grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+      {/* Background blobs - faint */}
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-purple-100 rounded-full blur-[120px] opacity-60" />
+      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-100 rounded-full blur-[120px] opacity-60" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold uppercase tracking-widest mb-4">
+            About the Project
+          </div>
+          <h2 id="about-heading" className="text-3xl md:text-4xl font-bold mb-4 text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            Why Build TruthLens?
+          </h2>
+          <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Misinformation spreads 6x faster than truth. We built TruthLens to give readers a
+            fast, unbiased, and explainable tool to verify what they read online.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-20">
           {FEATURES.map((f, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.07 }}
-              className="bg-white dark:glass rounded-2xl p-6 border border-slate-200 dark:border-white/[0.08] hover:-translate-y-1 hover:border-indigo-300 dark:hover:border-indigo-500/25 shadow-sm dark:shadow-none hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-200 group"
+              className="bg-white rounded-2xl p-8 border border-slate-100 hover:border-indigo-100 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 group"
             >
-              <div
-                className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-gradient-to-br dark:from-indigo-500/20 dark:to-purple-500/20 border border-indigo-100 dark:border-indigo-500/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform duration-200"
-                aria-hidden="true"
-              >
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 group-hover:bg-indigo-100 transition-all duration-300">
                 {f.icon}
               </div>
-              <h3 className="font-bold text-slate-900 dark:text-white mb-2">{f.title}</h3>
-              <p className="text-slate-500 text-sm leading-relaxed">{f.desc}</p>
+              <h3 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-indigo-700 transition-colors">
+                {f.title}
+              </h3>
+              <p className="text-slate-500 text-sm leading-relaxed">
+                {f.desc}
+              </p>
             </motion.div>
           ))}
         </div>
 
-        {/* Tech stack */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-widest mb-4">Tech Stack</p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {TECH.map((t) => (
+        <div className="text-center">
+          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">Built With Modern Tech</h4>
+          <div className="flex flex-wrap justify-center gap-3">
+            {TECH.map((t, i) => (
               <span
-                key={t}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 hover:-translate-y-0.5 shadow-sm dark:shadow-none ${t === "Gemini AI"
-                    ? "bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/30 text-blue-700 dark:text-blue-400"
-                    : t === "Next.js" || t === "React" || t === "Tailwind CSS"
-                      ? "bg-teal-50 dark:bg-teal-500/10 border-teal-200 dark:border-teal-500/30 text-teal-700 dark:text-teal-400"
-                      : "bg-white dark:glass border-slate-200 dark:border-white/[0.08] text-slate-600 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-500/30 hover:text-slate-900 dark:hover:text-slate-200"
-                  }`}
+                key={i}
+                className="px-4 py-2 rounded-full border border-slate-200 bg-slate-50 text-slate-600 text-sm font-medium hover:bg-white hover:border-indigo-200 hover:text-indigo-600 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-default"
               >
                 {t}
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
