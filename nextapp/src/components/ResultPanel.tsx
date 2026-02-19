@@ -10,7 +10,7 @@ export default function ResultPanel({
   result: PredictionResult;
   onReset: () => void;
 }) {
-  const isFake = result.prediction === "FAKE";
+  const isFake = result.label === "FAKE";
   const confidencePercent = (result.confidence * 100).toFixed(1);
 
   // Light mode colors only
@@ -50,7 +50,7 @@ export default function ResultPanel({
                 Classification Result
               </h3>
               <div className={`text-3xl md:text-4xl font-extrabold ${textColor}`} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {result.prediction} NEWS
+                {result.label} NEWS
               </div>
             </div>
           </div>
@@ -84,8 +84,8 @@ export default function ResultPanel({
       </div>
 
       {/* 2. Gemini Analysis */}
-      {result.gemini_analysis && (
-        <GeminiPanel analysis={result.gemini_analysis} />
+      {result.gemini && (
+        <GeminiPanel analysis={result.gemini} />
       )}
 
       {/* 3. Restart Button */}
