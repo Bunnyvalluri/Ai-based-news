@@ -52,12 +52,10 @@ export default function Home() {
           isConnecting={status === null}
         />
         <HowItWorks />
-        <Testimonials />
         <MetricsSection />
         <FAQSection />
         <Pricing />
         <About />
-        <Newsletter />
       </main>
       <Footer />
     </div>
