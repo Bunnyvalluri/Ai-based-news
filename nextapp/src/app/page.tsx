@@ -20,13 +20,25 @@ export default function Home() {
   const [bestAccuracy, setBestAccuracy] = useState<number | null>(null);
 
   useEffect(() => {
-    // Check backend status on mount
-    fetchStatus()
-      .then((data) => {
-        setStatus(data);
-        // If status included accuracy, we'd set it.
-      })
-      .catch((err) => console.error("Status check failed", err));
+    let retryCount = 0;
+    const maxRetries = 10;
+
+    const checkStatus = () => {
+      fetchStatus()
+        .then((data) => {
+          setStatus(data);
+          console.log("Backend status:", data);
+        })
+        .catch((err) => {
+          console.error("Status check failed", err);
+          if (retryCount < maxRetries) {
+            retryCount++;
+            setTimeout(checkStatus, 2000);
+          }
+        });
+    };
+
+    checkStatus();
   }, []);
 
   return (
@@ -35,7 +47,10 @@ export default function Home() {
       <main>
         <Hero status={status} accuracy={bestAccuracy} />
         <TrustCloud />
-        <Detector modelReady={status?.model_ready ?? false} />
+        <Detector
+          modelReady={status?.model_ready ?? false}
+          isConnecting={status === null}
+        />
         <HowItWorks />
         <Testimonials />
         <MetricsSection />

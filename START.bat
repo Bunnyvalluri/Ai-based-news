@@ -33,7 +33,7 @@ echo  [OK] Dependencies installed.
 
 echo.
 echo  [2/4] Checking for dataset...
-if not exist "data\news_dataset.csv" (
+if not exist "backend\data\news_dataset.csv" (
     echo  Dataset not found. Generating synthetic dataset ^(20,000 articles^)...
     cd backend
     python generate_dataset.py
@@ -45,7 +45,7 @@ if not exist "data\news_dataset.csv" (
 
 echo.
 echo  [3/4] Checking for trained model...
-if not exist "models\best_model.joblib" (
+if not exist "backend\models\best_model.joblib" (
     echo  Model not found. Training ML models ^(this may take 2-5 minutes^)...
     cd backend
     python trainer.py
@@ -57,6 +57,9 @@ if not exist "models\best_model.joblib" (
 
 echo.
 echo  [4/4] Starting Flask server...
+:: Cleanup old processes on port 5000
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :5000 ^| findstr LISTENING') do taskkill /f /pid %%a >nul 2>&1
+
 echo.
 echo  ─────────────────────────────────────────────────────────────────────
 echo   🌐  TruthLens is running at: http://localhost:5000

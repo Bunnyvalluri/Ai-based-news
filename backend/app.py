@@ -276,8 +276,10 @@ def model_metrics():
 @app.route('/api/status', methods=['GET'])
 def system_status():
     """Return system status including whether model is trained and Gemini available."""
+    ready = model_is_ready()
+    logger.info(f"Status check: model_ready={ready}")
     return api_response({
-        'model_ready': model_is_ready(),
+        'model_ready': ready,
         'gemini_available': gemini_is_available(),
         'version': '1.0.0'
     })
