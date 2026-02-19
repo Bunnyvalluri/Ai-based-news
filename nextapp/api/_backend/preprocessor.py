@@ -20,35 +20,46 @@ if os.environ.get('VERCEL') or os.path.exists('/tmp'):
 
 logger = logging.getLogger(__name__)
 
-# Download required NLTK resources on first run
-NLTK_PACKAGES = ['punkt', 'stopwords', 'wordnet', 'omw-1.4', 'punkt_tab']
-for pkg in NLTK_PACKAGES:
-    try:
-        # Try to find it first to avoid redundant downloads
+# Initialize NLP tools with fallback
+_lemmatizer = None
+_stemmer = None
+_stop_words = set()
+_nltk_ready = False
+
+try:
+    # Download required NLTK resources on first run
+    NLTK_PACKAGES = ['punkt', 'stopwords', 'wordnet', 'omw-1.4', 'punkt_tab']
+    for pkg in NLTK_PACKAGES:
         try:
-            if pkg == 'punkt': nltk.data.find('tokenizers/punkt')
-            elif pkg == 'stopwords': nltk.data.find('corpora/stopwords')
-            elif pkg == 'wordnet': nltk.data.find('corpora/wordnet')
-            else: nltk.data.find(pkg)
-        except LookupError:
-             # Download to /tmp if not found
-             download_dir = '/tmp' if os.path.exists('/tmp') else None
-             if download_dir:
-                 nltk.download(pkg, download_dir=download_dir, quiet=True)
-             else:
-                 nltk.download(pkg, quiet=True)
-    except Exception as e:
-        logger.warning(f"Could not download NLTK package '{pkg}': {e}")
+            # Try to find it first to avoid redundant downloads
+            try:
+                if pkg == 'punkt': nltk.data.find('tokenizers/punkt')
+                elif pkg == 'stopwords': nltk.data.find('corpora/stopwords')
+                elif pkg == 'wordnet': nltk.data.find('corpora/wordnet')
+                else: nltk.data.find(pkg)
+            except LookupError:
+                 # Download to /tmp if not found
+                 download_dir = '/tmp' if os.path.exists('/tmp') else None
+                 if download_dir:
+                     nltk.download(pkg, download_dir=download_dir, quiet=True)
+                 else:
+                     nltk.download(pkg, quiet=True)
+        except Exception:
+            pass
 
-# Import NLTK modules AFTER download
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer, PorterStemmer
-
-# Initialize NLP tools
-_lemmatizer = WordNetLemmatizer()
-_stemmer = PorterStemmer()
-_stop_words = set(stopwords.words('english'))
+    # Import NLTK modules AFTER download
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+    from nltk.stem import WordNetLemmatizer, PorterStemmer
+    
+    _lemmatizer = WordNetLemmatizer()
+    _stemmer = PorterStemmer()
+    _stop_words = set(stopwords.words('english'))
+    _nltk_ready = True
+    
+except Exception as e:
+    logger.warning(f"NLTK initialization failed: {e}. Using basic fallback.")
+    _nltk_ready = False
 
 
 def _lowercase(text: str) -> str:
@@ -105,6 +116,11 @@ def preprocess(text: str, use_stemming: bool = False) -> str:
 
     text = _lowercase(text)
     text = _remove_punctuation(text)
+    
+    # Fallback if NLTK failed to load
+    if not _nltk_ready:
+        return text
+
     tokens = _tokenize(text)
     tokens = _remove_stopwords(tokens)
 
