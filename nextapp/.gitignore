@@ -1,0 +1,44 @@
+# Next.js
+.next/
+out/
+node_modules/
+*.tsbuildinfo
+next-env.d.ts
+
+# Python
+__pycache__/
+*.py[cod]
+.Python
+*.egg-info/
+dist/
+build/
+*.so
+*.pyd
+.venv/
+venv/
+env/
+
+# Env files (never commit secrets)
+.env
+.env.local
+.env.production
+.env*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.user
+
+# Keep model files (they're small)
+!backend/models/*.joblib
+!backend/models/*.json

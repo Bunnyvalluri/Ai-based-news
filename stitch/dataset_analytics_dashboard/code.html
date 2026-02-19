@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dataset Analytics Dashboard | FakeNews AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex">
+<!-- Side Navigation -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 flex flex-col bg-white dark:bg-background-dark sticky top-0 h-screen">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary rounded-lg p-2 text-white flex items-center justify-center">
+<span class="material-symbols-outlined">shield_with_heart</span>
+</div>
+<div>
+<h1 class="text-sm font-bold tracking-tight uppercase text-primary">FakeNews AI</h1>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">RESEARCHER PORTAL</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="text-sm font-medium">Datasets</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">memory</span>
+<span class="text-sm font-medium">Model Hub</span>
+</a>
+<div class="pt-4 pb-2 px-3">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">System</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm font-medium">Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Professional avatar of a male researcher" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK8FriO11K2BbHawNyKQDIp1gdatM1hEgCt_Ze9hOQD0a5iXcgXF4-m8drLXb9DRSZ2Um5RhNPSoWzkjNkN5UkH2hHBkjvtlEDI7VF4I3RNRuk3tmYgrD_wYuNjdwmqvvh9_QdcivyWEC-5muEJXo3ijV51i_SYLzDU4AMHX0ZLy81RUaWdPxID571raCMBllQ7CWQ6oyucirN-l080RwCckJfDliwYW2F1m76ZFqRQeK64xDAb71QT6NApU4B4DqOHQp33hZeJlVB"/>
+</div>
+<div class="overflow-hidden">
+<p class="text-xs font-semibold truncate">Dr. Aris Thorne</p>
+<p class="text-[10px] text-slate-500 truncate">Lead Researcher</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-10 px-8 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-bold tracking-tight">Dataset Analytics</h2>
+<span class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold rounded uppercase">Live Sync</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative group">
+<span class="material-symbols-outlined text-slate-500 hover:text-primary cursor-pointer transition-colors p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">search</span>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all shadow-sm">
+<span class="material-symbols-outlined text-sm">download</span>
+                    Export Dataset
+                </button>
+</div>
+</header>
+<div class="p-8 space-y-8 max-w-7xl mx-auto">
+<!-- Summary Stats -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 text-primary rounded-lg">
+<span class="material-symbols-outlined">data_usage</span>
+</div>
+<span class="text-emerald-500 text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> 12%
+                        </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Records</p>
+<h3 class="text-3xl font-bold mt-1">42,804</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-amber-100 dark:bg-amber-900/30 text-amber-600 rounded-lg">
+<span class="material-symbols-outlined">fact_check</span>
+</div>
+<span class="text-slate-500 text-xs font-bold">Updated 2m ago</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Authenticity Ratio</p>
+<h3 class="text-3xl font-bold mt-1">1.08:1</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-purple-100 dark:bg-purple-900/30 text-purple-600 rounded-lg">
+<span class="material-symbols-outlined">language</span>
+</div>
+<span class="text-rose-500 text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_down</span> 0.4%
+                        </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Unique Sources</p>
+<h3 class="text-3xl font-bold mt-1">856</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-lg">
+<span class="material-symbols-outlined">update</span>
+</div>
+<span class="text-slate-500 text-xs font-bold">Stable</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Avg Token Count</p>
+<h3 class="text-3xl font-bold mt-1">342</h3>
+</div>
+</div>
+<!-- Main Charts Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Class Balance Pie/Donut Chart Placeholder -->
+<div class="lg:col-span-1 bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<h4 class="font-bold text-lg mb-6">Class Balance</h4>
+<div class="relative h-64 flex items-center justify-center">
+<!-- Abstract SVG Representation of a Donut Chart -->
+<svg class="w-48 h-48 transform -rotate-90">
+<circle class="text-slate-100 dark:text-slate-800" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-width="24"></circle>
+<circle class="text-primary" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-dasharray="502" stroke-dashoffset="241" stroke-width="24"></circle>
+<circle class="text-rose-500" cx="96" cy="96" fill="transparent" r="80" stroke="currentColor" stroke-dasharray="502" stroke-dashoffset="400" stroke-width="24"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-bold">42k</span>
+<span class="text-xs text-slate-500 uppercase">Total Items</span>
+</div>
+</div>
+<div class="mt-6 flex justify-around">
+<div class="text-center">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-sm font-medium">Real News</span>
+</div>
+<p class="text-lg font-bold">52.4%</p>
+</div>
+<div class="text-center">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-3 h-3 rounded-full bg-rose-500"></span>
+<span class="text-sm font-medium">Fake News</span>
+</div>
+<p class="text-lg font-bold">47.6%</p>
+</div>
+</div>
+</div>
+<!-- Source Distribution Bar Chart Placeholder -->
+<div class="lg:col-span-2 bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-bold text-lg">Distribution of News Sources</h4>
+<select class="bg-slate-50 dark:bg-slate-800 border-none text-xs rounded-lg px-3 py-1 font-semibold focus:ring-1 focus:ring-primary transition-all">
+<option>Top 10 Ranked</option>
+<option>Top 20 Ranked</option>
+</select>
+</div>
+<div class="space-y-5">
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-semibold uppercase text-slate-500">
+<span>Reuters</span>
+<span>8,421</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 85%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-semibold uppercase text-slate-500">
+<span>Associated Press</span>
+<span>7,102</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 72%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-semibold uppercase text-slate-500">
+<span>Twitter/X</span>
+<span>6,854</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-rose-400" style="width: 68%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-semibold uppercase text-slate-500">
+<span>BBC News</span>
+<span>5,920</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 60%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-semibold uppercase text-slate-500">
+<span>The Guardian</span>
+<span>4,210</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 42%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Token Visualization & Version History -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Word Cloud Card -->
+<div class="lg:col-span-1 bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<h4 class="font-bold text-lg mb-4">Frequent Tokens</h4>
+<p class="text-xs text-slate-500 mb-6 italic">Visualizing keyword density across dataset.</p>
+<!-- Abstract Word Cloud Placeholder -->
+<div class="flex flex-wrap gap-2 items-center justify-center p-4">
+<span class="text-3xl font-bold text-primary opacity-90">Election</span>
+<span class="text-xl font-semibold text-slate-400">Claims</span>
+<span class="text-2xl font-bold text-primary/70">Verified</span>
+<span class="text-sm font-medium text-rose-500/60">Scandal</span>
+<span class="text-lg font-bold text-slate-600 dark:text-slate-300">Report</span>
+<span class="text-4xl font-extrabold text-primary">Politics</span>
+<span class="text-sm font-semibold text-emerald-500">Official</span>
+<span class="text-xl font-bold text-slate-400">Statement</span>
+<span class="text-2xl font-bold text-primary/50">Urgent</span>
+<span class="text-base font-medium text-slate-500">Source</span>
+<span class="text-3xl font-bold text-slate-300">Media</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-900 via-transparent to-transparent opacity-10 pointer-events-none"></div>
+</div>
+<!-- Version History & Data Management -->
+<div class="lg:col-span-2 bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-bold text-lg">Data Management &amp; Versioning</h4>
+<div class="flex gap-2">
+<button class="text-primary text-xs font-bold hover:underline">View All Logs</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-xs text-slate-500 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">
+<th class="pb-3 font-semibold">Version ID</th>
+<th class="pb-3 font-semibold">Update Date</th>
+<th class="pb-3 font-semibold">Changes</th>
+<th class="pb-3 font-semibold text-right">Records Added</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-slate-50 dark:divide-slate-800">
+<tr>
+<td class="py-4 font-mono font-bold text-primary">v2.4.1</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">Oct 24, 2023</td>
+<td class="py-4 font-medium">Added X/Twitter 2023 Archive</td>
+<td class="py-4 text-right font-bold text-emerald-500">+1,200</td>
+</tr>
+<tr>
+<td class="py-4 font-mono font-bold text-primary">v2.4.0</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">Oct 15, 2023</td>
+<td class="py-4 font-medium">Re-cleaned Reuters dataset</td>
+<td class="py-4 text-right font-bold text-slate-400">0</td>
+</tr>
+<tr>
+<td class="py-4 font-mono font-bold text-primary">v2.3.8</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">Sep 28, 2023</td>
+<td class="py-4 font-medium">Integrated FactCheck.org API</td>
+<td class="py-4 text-right font-bold text-emerald-500">+3,400</td>
+</tr>
+<tr>
+<td class="py-4 font-mono font-bold text-primary">v2.3.5</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">Aug 12, 2023</td>
+<td class="py-4 font-medium">Initial Batch Import</td>
+<td class="py-4 text-right font-bold text-emerald-500">+38,204</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-8 flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">cloud_done</span>
+<div>
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">System Status</p>
+<p class="text-sm font-semibold">Database synchronized with Model API</p>
+</div>
+</div>
+<button class="bg-white dark:bg-slate-700 text-slate-700 dark:text-white px-3 py-1.5 rounded border border-slate-200 dark:border-slate-600 text-xs font-bold hover:bg-slate-100 transition-colors">
+                            Verify Integrity
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-12 py-8 px-8 border-t border-slate-200 dark:border-slate-800 text-center">
+<p class="text-slate-400 text-xs font-medium uppercase tracking-widest">FakeNews AI Dataset Dashboard • 2023 Researcher Edition</p>
+</footer>
+</main>
+</body></html>

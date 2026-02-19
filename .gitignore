@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+*.so
+*.pyd
+.venv/
+venv/
+env/
+.env
+.env.local
+.env.production
+
+# Logs & data
+logs/
+*.log
+backend/data/*.csv
+
+# Next.js
+nextapp/.next/
+nextapp/node_modules/
+nextapp/*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.user
+
+# Keep model files (small, needed for deployment)
+!backend/models/*.joblib
+!backend/models/*.json

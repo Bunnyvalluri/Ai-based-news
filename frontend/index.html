@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TruthLens — AI Fake News Detector</title>
+  <meta name="description"
+    content="TruthLens uses advanced Machine Learning and NLP to instantly detect fake news with confidence scoring and keyword explainability." />
+  <meta name="keywords" content="fake news detection, AI, machine learning, NLP, fact check, misinformation" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ░░ HEADER ░░ -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="18" r="18" fill="url(#logoGrad)" />
+            <path d="M10 14h16M10 18h12M10 22h8" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+            <circle cx="27" cy="22" r="4" fill="white" fill-opacity="0.2" stroke="white" stroke-width="1.5" />
+            <path d="M25.5 22l1 1 2-2" stroke="white" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1" />
+                <stop offset="1" stop-color="#8b5cf6" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">TruthLens</span>
+        <span class="logo-badge">AI</span>
+      </div>
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="#detector" class="nav-link">Detector</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#metrics" class="nav-link">Performance</a>
+        <a href="#about" class="nav-link">About</a>
+      </nav>
+      <button class="btn-analyze-nav"
+        onclick="document.getElementById('text-input').focus(); document.getElementById('detector').scrollIntoView({behavior:'smooth'})">
+        Try Now →
+      </button>
+    </div>
+  </header>
+
+  <!-- ░░ HERO ░░ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        ML + Gemini AI • Real-Time • 90%+ Accuracy
+      </div>
+      <h1 class="hero-title">
+        Stop Misinformation<br />
+        <span class="gradient-text">Before It Spreads</span>
+      </h1>
+      <p class="hero-subtitle">
+        TruthLens uses advanced Machine Learning and Natural Language Processing to
+        instantly classify news articles as <strong>Real</strong> or <strong>Fake</strong> —
+        with confidence scoring and explainable AI keywords.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('detector').scrollIntoView({behavior:'smooth'})">
+          <span>Analyze an Article</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+        <button class="btn-secondary"
+          onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">
+          Learn How It Works
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value" id="hero-stat-accuracy">—</span>
+          <span class="stat-label">Accuracy</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">4</span>
+          <span class="stat-label">ML Models</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">&lt;3s</span>
+          <span class="stat-label">Response</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">20K+</span>
+          <span class="stat-label">Articles Trained</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="floating-card fc-1">
+        <div class="fc-icon fake-icon">✗</div>
+        <div class="fc-content">
+          <span class="fc-label fake">FAKE</span>
+          <span class="fc-conf">Confidence: 97.2%</span>
+        </div>
+      </div>
+      <div class="floating-card fc-2">
+        <div class="fc-icon real-icon">✓</div>
+        <div class="fc-content">
+          <span class="fc-label real">REAL</span>
+          <span class="fc-conf">Confidence: 94.8%</span>
+        </div>
+      </div>
+      <div class="floating-card fc-3">
+        <div class="fc-icon">🔍</div>
+        <div class="fc-content">
+          <span class="fc-label neutral">NLP Analysis</span>
+          <span class="fc-conf">12 keywords found</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ MAIN DETECTOR ░░ -->
+  <section class="detector-section" id="detector">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Analyze Your Article</h2>
+        <p class="section-subtitle">Paste any news headline or full article below. Our AI will classify it in seconds.
+        </p>
+      </div>
+
+      <!-- Model status banner -->
+      <div class="model-status-banner" id="model-status-banner">
+        <div class="status-spinner" id="status-spinner">
+          <div class="spinner"></div>
+          <span>Checking model status…</span>
+        </div>
+        <div class="status-ready hidden" id="status-ready">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M20 6L9 17l-5-5" />
+          </svg>
+          <span>ML Model ready — <strong id="model-name-banner">Best Model</strong></span>
+          <span class="gemini-status-dot" id="gemini-status-dot" title="Checking Gemini...">⬤</span>
+          <span class="gemini-status-text" id="gemini-status-text">Gemini loading…</span>
+        </div>
+        <div class="status-not-trained hidden" id="status-not-trained">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 9v4M12 17h.01" />
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          </svg>
+          <span>Model not trained yet. <a href="#" onclick="showTrainingInstructions(); return false;">Click here for
+              setup instructions.</a></span>
+        </div>
+      </div>
+
+      <div class="detector-card">
+        <div class="detector-tabs">
+          <button class="tab-btn active" id="tab-text" onclick="switchTab('text')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+            Text Input
+          </button>
+          <button class="tab-btn" id="tab-file" onclick="switchTab('file')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            File Upload
+          </button>
+          <button class="tab-btn" id="tab-examples" onclick="switchTab('examples')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+            </svg>
+            Examples
+          </button>
+        </div>
+
+        <!-- Text Tab -->
+        <div class="tab-content active" id="content-text">
+          <div class="input-area">
+            <textarea id="text-input" class="news-textarea"
+              placeholder="Paste a news headline or full article here…&#10;&#10;Example: 'Scientists at MIT published findings in Nature showing a direct link between sleep quality and cognitive function in adults aged 35–54...'"
+              rows="8" maxlength="30000" aria-label="News article input" oninput="updateCharCount()"></textarea>
+            <div class="textarea-footer">
+              <span class="char-count" id="char-count">0 characters</span>
+              <button class="clear-btn" onclick="clearInput()" title="Clear input" aria-label="Clear input">✕
+                Clear</button>
+            </div>
+          </div>
+          <div class="validation-error hidden" id="validation-error" role="alert"></div>
+          <button class="btn-analyze" id="analyze-btn" onclick="analyzeText()" aria-label="Analyze news article">
+            <svg class="analyze-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5">
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+            <span class="analyze-text">Analyze Now</span>
+            <div class="btn-loader hidden" id="btn-loader">
+              <div class="loader-dots"><span></span><span></span><span></span></div>
+            </div>
+          </button>
+        </div>
+
+        <!-- File Upload Tab -->
+        <div class="tab-content" id="content-file">
+          <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()"
+            ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)"
+            role="button" tabindex="0" aria-label="Upload file area"
+            onkeypress="if(event.key==='Enter') document.getElementById('file-input').click()">
+            <input type="file" id="file-input" accept=".txt,.csv" onchange="handleFileSelect(event)" hidden />
+            <div class="upload-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+            </div>
+            <p class="upload-text">Drag & drop or <span class="upload-link">browse files</span></p>
+            <p class="upload-hint">Supports .txt and .csv files up to 2MB</p>
+            <div class="file-selected hidden" id="file-selected">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+              </svg>
+              <span id="file-name"></span>
+            </div>
+          </div>
+          <button class="btn-analyze" id="analyze-file-btn" onclick="analyzeFile()" style="margin-top:16px">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+            Analyze File
+          </button>
+        </div>
+
+        <!-- Examples Tab -->
+        <div class="tab-content" id="content-examples">
+          <p class="examples-intro">Click an example to load it into the analyzer:</p>
+          <div class="examples-grid">
+            <div class="example-card real-example" onclick="loadExample('real', 0)">
+              <div class="example-tag real">REAL NEWS</div>
+              <p>"Scientists at MIT published findings in Nature showing a direct link between sleep quality and
+                cognitive function in adults aged 35–54. The peer-reviewed study tracked 2,340 participants over 18
+                months and found that consistent sleep below 6 hours significantly impaired memory consolidation."</p>
+            </div>
+            <div class="example-card fake-example" onclick="loadExample('fake', 0)">
+              <div class="example-tag fake">FAKE NEWS</div>
+              <p>"BREAKING: Scientists HIDE evidence that common vitamin D supplements CURES cancer to protect Big
+                Pharma profits! The CDC has been suppressing this information for years — here's the proof they DON'T
+                want you to see! Share before deleted!"</p>
+            </div>
+            <div class="example-card real-example" onclick="loadExample('real', 1)">
+              <div class="example-tag real">REAL NEWS</div>
+              <p>"The Federal Reserve announced interest rates would remain at 5.25% following its meeting on Wednesday.
+                Fed Chair stated that economic data continues to show resilience and that the committee will remain
+                data-dependent in future decisions regarding monetary policy."</p>
+            </div>
+            <div class="example-card fake-example" onclick="loadExample('fake', 1)">
+              <div class="example-tag fake">FAKE NEWS</div>
+              <p>"SHOCKING: Government plans to microchip the entire population by 2025 — whistleblower exposes
+                everything! A senior senator CAUGHT secretly meeting with globalist bankers — TREASON confirmed by
+                insider. The deep state is planning a FALSE FLAG attack on a major US city this weekend!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ░░ RESULTS PANEL ░░ -->
+      <div class="results-panel hidden" id="results-panel" aria-live="polite">
+        <div class="results-inner">
+
+          <!-- Verdict Badge -->
+          <div class="verdict-section">
+            <div class="verdict-badge" id="verdict-badge">
+              <div class="verdict-icon" id="verdict-icon"></div>
+              <div class="verdict-text">
+                <span class="verdict-label" id="verdict-label">ANALYZING…</span>
+                <span class="verdict-subtitle" id="verdict-subtitle">Processing your article</span>
+              </div>
+            </div>
+
+            <!-- Confidence Meter -->
+            <div class="confidence-section">
+              <div class="confidence-header">
+                <span class="confidence-title">Confidence Score</span>
+                <span class="confidence-value" id="confidence-value">—%</span>
+              </div>
+              <div class="confidence-bar-track">
+                <div class="confidence-bar-fill" id="confidence-bar-fill"></div>
+              </div>
+              <p class="confidence-explanation" id="confidence-explanation"></p>
+            </div>
+          </div>
+
+          <!-- Meta info row -->
+          <div class="result-meta-row" id="result-meta-row">
+            <div class="meta-item">
+              <span class="meta-label">Model Used</span>
+              <span class="meta-value" id="meta-model">—</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Model Accuracy</span>
+              <span class="meta-value" id="meta-accuracy">—</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Response Time</span>
+              <span class="meta-value" id="meta-time">—</span>
+            </div>
+          </div>
+
+          <!-- Keywords -->
+          <div class="keywords-section" id="keywords-section">
+            <h3 class="keywords-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8" />
+                <path d="M21 21l-4.35-4.35" />
+              </svg>
+              Top Influencing Keywords
+            </h3>
+            <p class="keywords-subtitle">These words most influenced the AI's decision:</p>
+            <div class="keywords-list" id="keywords-list"></div>
+          </div>
+
+          <!-- Explanation -->
+          <div class="explanation-box" id="explanation-box">
+            <div class="explanation-icon" id="explanation-icon"></div>
+            <div class="explanation-text" id="explanation-text"></div>
+          </div>
+
+          <!-- ░░ GEMINI AI ANALYSIS PANEL ░░ -->
+          <div class="gemini-panel" id="gemini-panel">
+            <div class="gemini-panel-header">
+              <div class="gemini-logo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+                    fill="url(#geminiGrad)" />
+                  <path d="M8 12l2.5 2.5L16 9" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <defs>
+                    <linearGradient id="geminiGrad" x1="2" y1="2" x2="22" y2="22">
+                      <stop stop-color="#4285f4" />
+                      <stop offset="0.5" stop-color="#9b59b6" />
+                      <stop offset="1" stop-color="#ea4335" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div>
+                <span class="gemini-panel-title">Gemini AI Analysis</span>
+                <span class="gemini-panel-subtitle">Powered by Google Gemini 1.5 Flash</span>
+              </div>
+              <div class="gemini-verdict-chip" id="gemini-verdict-chip">—</div>
+            </div>
+
+            <div class="gemini-loading" id="gemini-loading">
+              <div class="spinner"></div>
+              <span>Gemini is reading the article…</span>
+            </div>
+
+            <div class="gemini-content hidden" id="gemini-content">
+              <!-- Credibility score -->
+              <div class="credibility-row">
+                <span class="credibility-label">Credibility Score</span>
+                <div class="credibility-bar-track">
+                  <div class="credibility-bar-fill" id="credibility-bar-fill"></div>
+                </div>
+                <span class="credibility-score-val" id="credibility-score-val">—/10</span>
+              </div>
+
+              <div class="gemini-two-col">
+                <!-- Red flags -->
+                <div class="gemini-col">
+                  <h4 class="gemini-col-title red-col">
+                    <span>🚩</span> Red Flags
+                  </h4>
+                  <ul class="gemini-list" id="red-flags-list"></ul>
+                </div>
+                <!-- Credibility signals -->
+                <div class="gemini-col">
+                  <h4 class="gemini-col-title green-col">
+                    <span>✅</span> Credibility Signals
+                  </h4>
+                  <ul class="gemini-list" id="cred-signals-list"></ul>
+                </div>
+              </div>
+
+              <!-- Language analysis -->
+              <div class="gemini-detail-row" id="lang-analysis-row">
+                <span class="detail-label">💬 Language &amp; Tone</span>
+                <p class="detail-text" id="lang-analysis-text"></p>
+              </div>
+
+              <!-- Fact-check verdict -->
+              <div class="gemini-detail-row" id="fact-verdict-row">
+                <span class="detail-label">🔍 Fact-Check Verdict</span>
+                <p class="detail-text" id="fact-verdict-text"></p>
+              </div>
+
+              <!-- Recommendation -->
+              <div class="gemini-recommendation" id="gemini-recommendation">
+                <span class="rec-icon">💡</span>
+                <div>
+                  <span class="rec-label">Reader Recommendation</span>
+                  <p class="rec-text" id="rec-text"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gemini-unavailable hidden" id="gemini-unavailable">
+              <span>⚠️</span>
+              <p>Gemini AI analysis unavailable for this result.</p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="result-actions">
+            <button class="btn-secondary" onclick="resetAnalysis()">
+              ← Analyze Another Article
+            </button>
+            <button class="btn-copy" onclick="copyResults()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+              </svg>
+              Copy Report
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ HOW IT WORKS ░░ -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Pipeline</div>
+        <h2 class="section-title">How TruthLens Works</h2>
+        <p class="section-subtitle">A 5-stage NLP + ML pipeline processes every article in under 3 seconds.</p>
+      </div>
+      <div class="pipeline">
+        <div class="pipeline-step">
+          <div class="step-number">01</div>
+          <div class="step-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+              <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+            </svg>
+          </div>
+          <h3 class="step-title">Input &amp; Validation</h3>
+          <p class="step-desc">User submits news text via the web UI or API. Input undergoes validation: minimum length,
+            max word count, and format checks.</p>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-number">02</div>
+          <div class="step-icon" style="background:linear-gradient(135deg,#8b5cf6,#a855f7)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <polyline points="4 7 4 4 20 4 20 7" />
+              <line x1="9" y1="20" x2="15" y2="20" />
+              <line x1="12" y1="4" x2="12" y2="20" />
+            </svg>
+          </div>
+          <h3 class="step-title">NLP Preprocessing</h3>
+          <p class="step-desc">Text is normalized: lowercased, punctuation stripped, tokenized, stop-words removed, then
+            lemmatized via NLTK WordNet.</p>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-number">03</div>
+          <div class="step-icon" style="background:linear-gradient(135deg,#a855f7,#ec4899)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
+            </svg>
+          </div>
+          <h3 class="step-title">TF-IDF Vectorization</h3>
+          <p class="step-desc">Tokens are converted to numerical vectors using TF-IDF with 50,000 unigram+bigram
+            features — fitted only on training data to prevent leakage.</p>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-number">04</div>
+          <div class="step-icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path
+                d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+            </svg>
+          </div>
+          <h3 class="step-title">ML Classification</h3>
+          <p class="step-desc">The feature vector is classified by the best-trained model (LR, NB, RF, or SVM).
+            Probability scores produce the confidence rating.</p>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-number">05</div>
+          <div class="step-icon" style="background:linear-gradient(135deg,#f43f5e,#f97316)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <polyline points="3 9 12 15 21 9" />
+            </svg>
+          </div>
+          <h3 class="step-title">Result &amp; Explanation</h3>
+          <p class="step-desc">A REAL/FAKE verdict with confidence score and top contributing keywords are returned to
+            the UI in under 3 seconds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ MODEL PERFORMANCE ░░ -->
+  <section class="metrics-section" id="metrics">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Performance</div>
+        <h2 class="section-title">Model Performance</h2>
+        <p class="section-subtitle">Live metrics from the trained models — loaded directly from evaluation results.</p>
+      </div>
+
+      <div class="metrics-loading" id="metrics-loading">
+        <div class="spinner"></div>
+        <span>Loading performance metrics…</span>
+      </div>
+
+      <div class="metrics-content hidden" id="metrics-content">
+        <div class="best-model-card" id="best-model-card">
+          <div class="bm-header">
+            <div class="bm-crown">👑</div>
+            <div>
+              <h3 class="bm-title" id="bm-title">Best Model</h3>
+              <p class="bm-subtitle">Selected for production deployment</p>
+            </div>
+            <div class="bm-badge">Production Model</div>
+          </div>
+          <div class="bm-metrics" id="bm-metrics"></div>
+        </div>
+
+        <div class="models-grid" id="models-grid"></div>
+      </div>
+
+      <div class="metrics-not-available hidden" id="metrics-not-available">
+        <div class="mna-icon">📊</div>
+        <h3>Metrics Not Available</h3>
+        <p>Train the model first to see live performance metrics here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ ABOUT / PRD ░░ -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <div class="section-badge">About</div>
+          <h2 class="section-title">Built for the Age of Misinformation</h2>
+          <p>TruthLens is built on the principles defined in a comprehensive Product Requirements Document — designed to
+            serve journalists, researchers, students, and the general public in identifying fake news at scale.</p>
+          <ul class="about-features">
+            <li><span class="af-icon">✓</span> 4 ML algorithms compared: LR, Naïve Bayes, RF, SVM</li>
+            <li><span class="af-icon">✓</span> TF-IDF with 50K unigram+bigram features</li>
+            <li><span class="af-icon">✓</span> Full NLP pipeline using NLTK lemmatization</li>
+            <li><span class="af-icon">✓</span> Keyword explainability (XAI)</li>
+            <li><span class="af-icon">✓</span> REST API for third-party integration</li>
+            <li><span class="af-icon">✓</span> File upload (.txt / .csv) support</li>
+          </ul>
+        </div>
+        <div class="about-tech">
+          <h3 class="tech-title">Technology Stack</h3>
+          <div class="tech-grid">
+            <div class="tech-pill">🐍 Python 3.10+</div>
+            <div class="tech-pill">⚗️ Flask</div>
+            <div class="tech-pill">🤖 scikit-learn</div>
+            <div class="tech-pill">📝 NLTK</div>
+            <div class="tech-pill">📊 Pandas</div>
+            <div class="tech-pill">🔢 NumPy</div>
+            <div class="tech-pill">💾 joblib</div>
+            <div class="tech-pill">🌐 REST API</div>
+            <div class="tech-pill" style="border-color:rgba(66,133,244,0.4);color:#7baaf7">✨ Gemini AI</div>
+          </div>
+          <div class="target-metrics">
+            <div class="metric-row">
+              <span>Target Accuracy</span>
+              <div class="mini-bar">
+                <div class="mini-fill" style="width:90%"></div>
+              </div>
+              <span>90%+</span>
+            </div>
+            <div class="metric-row">
+              <span>F1-Score Target</span>
+              <div class="mini-bar">
+                <div class="mini-fill" style="width:87%"></div>
+              </div>
+              <span>≥ 0.87</span>
+            </div>
+            <div class="metric-row">
+              <span>Response Time</span>
+              <div class="mini-bar">
+                <div class="mini-fill" style="width:95%;background:linear-gradient(90deg,#10b981,#06d6a0)"></div>
+              </div>
+              <span>&lt; 3s</span>
+            </div>
+            <div class="metric-row">
+              <span>Uptime Target</span>
+              <div class="mini-bar">
+                <div class="mini-fill" style="width:99%"></div>
+              </div>
+              <span>99%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-icon" style="width:28px;height:28px;">
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="18" r="18" fill="url(#logoGrad2)" />
+                <path d="M10 14h16M10 18h12M10 22h8" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+                <circle cx="27" cy="22" r="4" fill="white" fill-opacity="0.2" stroke="white" stroke-width="1.5" />
+                <path d="M25.5 22l1 1 2-2" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <defs>
+                  <linearGradient id="logoGrad2" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#6366f1" />
+                    <stop offset="1" stop-color="#8b5cf6" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <span class="logo-text">TruthLens</span>
+          </div>
+          <p>AI-powered fake news detection for the information age.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <a href="#detector">Detector</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#metrics">Performance</a>
+          <a href="#about">About</a>
+        </div>
+        <div class="footer-tech">
+          <h4>Technology</h4>
+          <a href="https://scikit-learn.org/" target="_blank" rel="noopener">scikit-learn</a>
+          <a href="https://www.nltk.org/" target="_blank" rel="noopener">NLTK</a>
+          <a href="https://flask.palletsprojects.com/" target="_blank" rel="noopener">Flask API</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 TruthLens — AI-Based Fake News Detection System v1.0</span>
+        <span>Built with ♥ using Python + scikit-learn</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ░░ TRAINING MODAL ░░ -->
+  <div class="modal-overlay hidden" id="training-modal" role="dialog" aria-modal="true"
+    aria-label="Training instructions">
+    <div class="modal-card">
+      <button class="modal-close" onclick="document.getElementById('training-modal').classList.add('hidden')">✕</button>
+      <h2>🚀 Setup Instructions</h2>
+      <p>To train the model, run these commands in your terminal from the project root:</p>
+      <div class="code-block">
+        <code>cd backend</code><br />
+        <code>pip install -r ../requirements.txt</code><br />
+        <code>python generate_dataset.py</code><br />
+        <code>python trainer.py</code><br />
+        <code>python app.py</code>
+      </div>
+      <p style="margin-top:12px;color:var(--text-muted)">Or simply run <strong>START.bat</strong> from the project root.
+      </p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

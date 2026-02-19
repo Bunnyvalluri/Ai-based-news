@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FakeNewsAI Docs - Documentation &amp; API Guide</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: rgba(146, 164, 201, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-200">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-[1440px] mx-auto flex h-16 items-center justify-between px-6 lg:px-10">
+<div class="flex items-center gap-8">
+<a class="flex items-center gap-3" href="#">
+<div class="bg-primary p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-white text-2xl">shield_with_heart</span>
+</div>
+<span class="text-xl font-bold tracking-tight">FakeNewsAI <span class="text-primary">Docs</span></span>
+</a>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Guides</a>
+<a class="text-sm font-medium text-primary" href="#">API Reference</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Models</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="h-10 w-64 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 pl-10 text-sm focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Search documentation..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all">Get API Key</button>
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500">person</span>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-[1440px] mx-auto flex min-h-[calc(100vh-64px)]">
+<!-- Sidebar Navigation -->
+<aside class="hidden lg:block w-72 border-r border-slate-200 dark:border-slate-800 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto sidebar-scroll p-6">
+<div class="space-y-8">
+<div>
+<h5 class="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Getting Started</h5>
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">info</span> Introduction
+                            </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">rocket_launch</span> Quickstart Guide
+                            </a>
+</li>
+</ul>
+</div>
+<div>
+<h5 class="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Technical Concepts</h5>
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">account_tree</span> NLP Pipeline
+                            </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">bar_chart</span> Metrics &amp; Scoring
+                            </a>
+</li>
+</ul>
+</div>
+<div>
+<h5 class="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">API Reference</h5>
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">code</span> Authentication
+                            </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">api</span> Predict Endpoint
+                            </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">history</span> Versioning
+                            </a>
+</li>
+</ul>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 min-w-0 p-6 lg:p-12 overflow-x-hidden">
+<div class="max-w-4xl mx-auto">
+<nav class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+<a class="hover:text-primary" href="#">Docs</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">NLP Pipeline &amp; API</span>
+</nav>
+<h1 class="text-4xl font-black mb-4 tracking-tight">NLP Pipeline &amp; REST API Reference</h1>
+<p class="text-lg text-slate-600 dark:text-slate-400 mb-12">
+                    Our AI models utilize a state-of-the-art Natural Language Processing pipeline to analyze text patterns, linguistic markers, and semantic consistency to detect disinformation.
+                </p>
+<!-- NLP Pipeline Section -->
+<section class="mb-20">
+<h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+<span class="h-8 w-8 bg-primary/20 text-primary rounded-lg flex items-center justify-center text-xl">1</span>
+                        The NLP Pipeline
+                    </h2>
+<p class="mb-8 text-slate-600 dark:text-slate-400">Before inference, every text string passes through a rigorous 5-step preprocessing sequence to ensure high accuracy and remove linguistic noise.</p>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+<!-- Connecting Line (hidden on mobile) -->
+<div class="hidden md:block absolute top-10 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-800 -z-10"></div>
+<!-- Step 1 -->
+<div class="flex flex-col items-center text-center">
+<div class="h-14 w-14 rounded-full bg-primary text-white flex items-center justify-center mb-4 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">data_object</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Tokenization</h4>
+<p class="text-xs text-slate-500">Splitting text into individual words.</p>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center text-center">
+<div class="h-14 w-14 rounded-full bg-primary text-white flex items-center justify-center mb-4 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">format_list_bulleted</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Lowercasing</h4>
+<p class="text-xs text-slate-500">Standardizing text case sensitivity.</p>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center text-center">
+<div class="h-14 w-14 rounded-full bg-primary text-white flex items-center justify-center mb-4 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">content_cut</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Lemmatization</h4>
+<p class="text-xs text-slate-500">Reducing words to base forms.</p>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center text-center">
+<div class="h-14 w-14 rounded-full bg-primary text-white flex items-center justify-center mb-4 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">filter_list</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Stop-words</h4>
+<p class="text-xs text-slate-500">Removing common noise words.</p>
+</div>
+<!-- Step 5 -->
+<div class="flex flex-col items-center text-center">
+<div class="h-14 w-14 rounded-full bg-primary text-white flex items-center justify-center mb-4 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">grid_3x3</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Vectorization</h4>
+<p class="text-xs text-slate-500">Conversion to numerical data.</p>
+</div>
+</div>
+</section>
+<!-- API Section -->
+<section class="mb-20">
+<h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+<span class="h-8 w-8 bg-primary/20 text-primary rounded-lg flex items-center justify-center text-xl">2</span>
+                        REST API Reference
+                    </h2>
+<div class="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden mb-8">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-900">
+<div class="flex items-center gap-3">
+<span class="bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">POST</span>
+<code class="text-sm font-mono text-slate-600 dark:text-slate-300">/api/v1/predict</code>
+</div>
+<span class="text-xs text-slate-400">v2.1.0-stable</span>
+</div>
+<div class="p-6">
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-6">Analyze a single text sample for potential fake news content. Returns a probability score and top contributing features.</p>
+<h5 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Request Body</h5>
+<div class="bg-white dark:bg-slate-950 p-4 rounded-lg border border-slate-200 dark:border-slate-800 mb-6">
+<pre class="text-xs font-mono text-slate-700 dark:text-slate-300">{
+  "text": "The latest report shows that...",
+  "model": "fakenews-detector-pro-v1",
+  "explain": true
+}</pre>
+</div>
+<h5 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Implementation Example (Python)</h5>
+<div class="relative group">
+<div class="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-2 py-1 rounded">Copy</button>
+</div>
+<div class="bg-slate-950 p-5 rounded-xl overflow-x-auto">
+<pre class="text-sm font-mono text-blue-300"><span class="text-purple-400">import</span> requests
+
+url = <span class="text-green-400">"https://api.fakenewsai.com/v1/predict"</span>
+headers = {
+    <span class="text-green-400">"Authorization"</span>: <span class="text-green-400">"Bearer YOUR_API_KEY"</span>,
+    <span class="text-green-400">"Content-Type"</span>: <span class="text-green-400">"application/json"</span>
+}
+data = {
+    <span class="text-green-400">"text"</span>: <span class="text-green-400">"Viral post claiming miracle cures..."</span>,
+    <span class="text-green-400">"model"</span>: <span class="text-green-400">"latest"</span>
+}
+
+response = requests.post(url, json=data, headers=headers)
+print(response.json())</pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Metrics Section -->
+<section class="mb-20">
+<h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+<span class="h-8 w-8 bg-primary/20 text-primary rounded-lg flex items-center justify-center text-xl">3</span>
+                        Understanding Metrics
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+<h4 class="font-bold mb-2">Precision</h4>
+<p class="text-sm text-slate-500">The ability of the classifier not to label as disinformation a post that is actually authentic.</p>
+<div class="mt-4 text-primary font-mono text-2xl font-bold">98.4%</div>
+</div>
+<div class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+<h4 class="font-bold mb-2">Recall</h4>
+<p class="text-sm text-slate-500">The ability of the classifier to find all the disinformation instances in the dataset.</p>
+<div class="mt-4 text-primary font-mono text-2xl font-bold">96.1%</div>
+</div>
+<div class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+<h4 class="font-bold mb-2">F1 Score</h4>
+<p class="text-sm text-slate-500">The harmonic mean of precision and recall, providing a balanced measure of performance.</p>
+<div class="mt-4 text-primary font-mono text-2xl font-bold">97.2%</div>
+</div>
+</div>
+</section>
+<!-- Help Widget -->
+<div class="border-t border-slate-200 dark:border-slate-800 pt-8 pb-12 flex flex-col md:flex-row items-center justify-between gap-6">
+<div>
+<p class="font-medium">Was this page helpful?</p>
+<p class="text-sm text-slate-500">Last updated August 2024</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+<span class="material-symbols-outlined text-lg">thumb_up</span> Yes
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-lg text-sm hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+<span class="material-symbols-outlined text-lg">thumb_down</span> No
+                        </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Mini-Table of Contents -->
+<aside class="hidden xl:block w-64 sticky top-16 h-[calc(100vh-64px)] p-8">
+<h5 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">On this page</h5>
+<ul class="space-y-3 text-sm">
+<li><a class="text-primary font-medium" href="#">Overview</a></li>
+<li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-200" href="#">The NLP Pipeline</a></li>
+<ul class="pl-4 space-y-2 mt-2">
+<li><a class="text-slate-400 hover:text-slate-900 dark:hover:text-slate-200" href="#">Pre-processing</a></li>
+<li><a class="text-slate-400 hover:text-slate-900 dark:hover:text-slate-200" href="#">Vectorization</a></li>
+</ul>
+<li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-200" href="#">REST API Reference</a></li>
+<li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-200" href="#">Understanding Metrics</a></li>
+</ul>
+<div class="mt-12 p-4 rounded-xl bg-primary/5 border border-primary/20">
+<p class="text-xs font-bold text-primary uppercase mb-2">Need help?</p>
+<p class="text-xs text-slate-500 mb-4">Can't find what you're looking for? Reach out to our developer support team.</p>
+<a class="text-xs font-bold text-primary flex items-center gap-1" href="#">
+                    Contact Support <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+</aside>
+</div>
+</body></html>

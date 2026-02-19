@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Model Training History - Fake News Detector AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a",
+                        "surface": "#1e293b",
+                        "surface-light": "#334155",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<!-- Logo & Branding -->
+<div class="flex items-center gap-4">
+<div class="bg-primary p-1.5 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-2xl">verified_user</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Fake News <span class="text-primary">Detector AI</span></h1>
+</div>
+<!-- Main Nav Links -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-semibold text-primary" href="#">Models</a>
+<a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Datasets</a>
+<a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Integrations</a>
+</nav>
+<!-- Search & Profile -->
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="bg-slate-100 dark:bg-surface border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary w-64 text-slate-200" placeholder="Search models..." type="text"/>
+</div>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="User Profile" class="h-full w-full object-cover" data-alt="Professional headshot of a male researcher" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAa-DWvsS3PkjAocjVQYCjdvyVKWAFw9Zc1OSv9EEg6z3xB412Dt7lnSCscoF6m9Qsd8kmhpY0JeOQ3cUBJMnZnrkbvik2ZD5ALV3jZu5nBT0loRjSyjX8B5sOKB3th3INkvQz7Weq7ja66pH28sgSD9nqSCkpnGHhsnJZeQD85vvPDqa7QkGh8UluvrNC2uOal2bkGSw5wjLbIjBIi7yt7Q_q8C77R-kauVEV8aXbfNhQbc5JLDZ3K4UPRYINpMNh1PEHjA6qC5Qgp"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Breadcrumbs & Header -->
+<div class="mb-8">
+<nav class="flex items-center gap-2 text-xs font-medium text-slate-500 mb-4">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<a class="hover:text-primary transition-colors text-slate-900 dark:text-slate-300" href="#">Models</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary">Training History</span>
+</nav>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-3xl font-black text-slate-900 dark:text-white mb-2">Model Training History</h2>
+<p class="text-slate-500 dark:text-slate-400 max-w-2xl text-base">Track, analyze, and compare performance benchmarks for fake news classification algorithms across historical datasets.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2.5 bg-surface dark:bg-surface text-white rounded-lg font-bold text-sm hover:bg-slate-700 transition-all border border-slate-700">
+<span class="material-symbols-outlined text-sm">filter_alt</span>
+                        Filters
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-lg font-bold text-sm shadow-lg shadow-primary/20 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-sm">compare_arrows</span>
+                        Compare Selected
+                    </button>
+</div>
+</div>
+</div>
+<!-- Metrics Overview Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+<!-- Metric 1 -->
+<div class="bg-white dark:bg-surface border border-slate-200 dark:border-slate-800 p-5 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Training Runs</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg text-lg">history</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">128</span>
+<span class="text-xs font-bold text-emerald-500 pb-1.5 flex items-center">
+<span class="material-symbols-outlined text-xs">arrow_upward</span>
+                        12%
+                    </span>
+</div>
+<p class="text-xs text-slate-500 mt-2">v2.4 cycle: +14 runs</p>
+</div>
+<!-- Metric 2 -->
+<div class="bg-white dark:bg-surface border border-slate-200 dark:border-slate-800 p-5 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Best Accuracy</p>
+<span class="material-symbols-outlined text-emerald-500 bg-emerald-500/10 p-1.5 rounded-lg text-lg">verified</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">98.2%</span>
+<span class="text-xs font-bold text-emerald-500 pb-1.5 flex items-center">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+                        0.5%
+                    </span>
+</div>
+<p class="text-xs text-slate-500 mt-2">RoBERTa-Base (Jan 12)</p>
+</div>
+<!-- Metric 3 -->
+<div class="bg-white dark:bg-surface border border-slate-200 dark:border-slate-800 p-5 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Avg. F1-Score</p>
+<span class="material-symbols-outlined text-amber-500 bg-amber-500/10 p-1.5 rounded-lg text-lg">analytics</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">96.4</span>
+<span class="text-xs font-bold text-slate-400 pb-1.5 flex items-center">
+<span class="material-symbols-outlined text-xs">remove</span>
+                        Stable
+                    </span>
+</div>
+<p class="text-xs text-slate-500 mt-2">Across top 10 runs</p>
+</div>
+<!-- Metric 4 -->
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/20 p-5 rounded-xl shadow-sm ring-1 ring-primary/30">
+<div class="flex items-center justify-between mb-3">
+<p class="text-sm font-medium text-primary">Current Deployed</p>
+<span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-xl font-bold text-slate-900 dark:text-white">BERT-v2.1-Final</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Running since: Jan 18, 2024</p>
+</div>
+</div>
+<!-- History Table Section -->
+<div class="bg-white dark:bg-surface border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4">
+<input class="rounded text-primary focus:ring-primary dark:bg-slate-900 border-slate-700" type="checkbox"/>
+</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Timestamp</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Algorithm</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Accuracy</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">F1-Score</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Status</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Table Row 1 (Deployed) -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<td class="px-6 py-4">
+<input checked="" class="rounded text-primary focus:ring-primary dark:bg-slate-900 border-slate-700" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold dark:text-white">Jan 24, 2024</span>
+<span class="text-xs text-slate-500 italic">14:32:01</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">neurology</span>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">BERT-v2.1-Final</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex-1 min-w-[100px] h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 rounded-full" style="width: 98.2%"></div>
+</div>
+<span class="text-sm font-bold text-emerald-500">98.2%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm font-medium tabular-nums">96.84</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/20 text-primary border border-primary/30">
+                                    Deployed
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-slate-400 transition-colors">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</td>
+</tr>
+<!-- Table Row 2 (Archived) -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<td class="px-6 py-4">
+<input class="rounded text-primary focus:ring-primary dark:bg-slate-900 border-slate-700" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold dark:text-white">Jan 22, 2024</span>
+<span class="text-xs text-slate-500 italic">09:15:44</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500 text-lg">schema</span>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Random Forest v4</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex-1 min-w-[100px] h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 92.5%"></div>
+</div>
+<span class="text-sm font-bold text-primary">92.5%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm font-medium tabular-nums">91.12</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-700">
+                                    Archived
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-slate-400 transition-colors">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</td>
+</tr>
+<!-- Expanded Detail Panel (Simulated) -->
+<tr class="bg-slate-50 dark:bg-slate-900/50">
+<td class="px-6 py-8 border-l-4 border-primary" colspan="7">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div>
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Preprocessing Configuration</h4>
+<ul class="space-y-2">
+<li class="flex justify-between text-sm">
+<span class="text-slate-500">Vectorizer</span>
+<span class="font-medium dark:text-slate-200 text-slate-800">TF-IDF Weighted</span>
+</li>
+<li class="flex justify-between text-sm">
+<span class="text-slate-500">N-gram Range</span>
+<span class="font-medium dark:text-slate-200 text-slate-800">(1, 3)</span>
+</li>
+<li class="flex justify-between text-sm">
+<span class="text-slate-500">Max Features</span>
+<span class="font-medium dark:text-slate-200 text-slate-800">50,000</span>
+</li>
+<li class="flex justify-between text-sm">
+<span class="text-slate-500">Stopwords</span>
+<span class="font-medium dark:text-slate-200 text-slate-800">NLTK Standard English</span>
+</li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Model Hyperparameters</h4>
+<ul class="space-y-2">
+<li class="flex justify-between text-sm">
+<span class="text-slate-500">Learning Rate</span>
+<span class="font-medium dark:text-slate-200 text-slate-800">2e-5</span>
+</li>
+<li class="flex justify-between text-sm">
+<span class="text-slate-500">Batch Size</span>
+<span class="font-medium dark:text-slate-200 text-slate-800">32</span>
+</li>
+<li class="flex justify-between text-sm">
+<span class="text-slate-500">Epochs</span>
+<span class="font-medium dark:text-slate-200 text-slate-800">15 (Early Stopping at 12)</span>
+</li>
+<li class="flex justify-between text-sm">
+<span class="text-slate-500">Weight Decay</span>
+<span class="font-medium dark:text-slate-200 text-slate-800">0.01</span>
+</li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Dataset Attribution</h4>
+<div class="bg-white dark:bg-surface border border-slate-200 dark:border-slate-800 rounded-lg p-3">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">database</span>
+<span class="text-sm font-bold">FEVER+v4.0_Master</span>
+</div>
+<p class="text-xs text-slate-500 mb-3">80% Train / 10% Val / 10% Test</p>
+<button class="w-full py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300 hover:bg-primary/20 hover:text-primary transition-all">
+                                                View Dataset Details
+                                            </button>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- Table Row 3 (Archived) -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<td class="px-6 py-4">
+<input class="rounded text-primary focus:ring-primary dark:bg-slate-900 border-slate-700" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold dark:text-white">Jan 18, 2024</span>
+<span class="text-xs text-slate-500 italic">21:10:05</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500 text-lg">scatter_plot</span>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">SVM Classifier v1</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex-1 min-w-[100px] h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 88.4%"></div>
+</div>
+<span class="text-sm font-bold text-primary">88.4%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm font-medium tabular-nums">87.50</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-700">
+                                    Archived
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-slate-400 transition-colors">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</td>
+</tr>
+<!-- Table Row 4 (Failed) -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<td class="px-6 py-4">
+<input class="rounded text-slate-400 dark:bg-slate-900 border-slate-700 opacity-50" disabled="" type="checkbox"/>
+</td>
+<td class="px-6 py-4 text-slate-400">
+<div class="flex flex-col">
+<span class="text-sm font-semibold">Jan 15, 2024</span>
+<span class="text-xs italic">11:04:12</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-400">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-rose-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-rose-500 text-lg">error_outline</span>
+</div>
+<span class="text-sm font-medium">XGBoost Alpha-Test</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-bold text-rose-500 uppercase">Training Failed</span>
+</td>
+<td class="px-6 py-4 text-slate-500">-</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-500 border border-rose-500/30">
+                                    Error
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-slate-400 transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="bg-slate-50 dark:bg-slate-800/30 px-6 py-4 flex items-center justify-between border-t border-slate-200 dark:border-slate-800">
+<p class="text-sm text-slate-500">Showing <span class="font-bold text-slate-800 dark:text-white">1 - 10</span> of <span class="font-bold text-slate-800 dark:text-white">128</span> runs</p>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded border border-slate-300 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 transition-colors text-slate-500 disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex gap-1">
+<button class="w-8 h-8 rounded text-sm font-bold bg-primary text-white">1</button>
+<button class="w-8 h-8 rounded text-sm font-bold hover:bg-white dark:hover:bg-slate-800 transition-colors">2</button>
+<button class="w-8 h-8 rounded text-sm font-bold hover:bg-white dark:hover:bg-slate-800 transition-colors">3</button>
+<span class="px-1 text-slate-400">...</span>
+<button class="w-8 h-8 rounded text-sm font-bold hover:bg-white dark:hover:bg-slate-800 transition-colors">13</button>
+</div>
+<button class="p-1 rounded border border-slate-300 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 transition-colors text-slate-500">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Floating Comparison Utility (Contextual) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-6 bg-slate-900 border border-slate-700 text-white px-6 py-4 rounded-2xl shadow-2xl ring-1 ring-white/10 z-50">
+<div class="flex items-center gap-3">
+<span class="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-[10px] font-bold">2</span>
+<span class="text-sm font-medium">Models selected for comparison</span>
+</div>
+<div class="h-6 w-px bg-slate-700"></div>
+<div class="flex gap-4">
+<button class="text-xs font-bold text-slate-400 hover:text-white transition-colors">Clear</button>
+<button class="px-5 py-2 bg-primary hover:bg-blue-600 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">bar_chart</span>
+                    Open Side-by-Side
+                </button>
+</div>
+</div>
+</main>
+<!-- Footer Information -->
+<footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200 dark:border-slate-800 mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-4 text-slate-400 grayscale opacity-60">
+<span class="text-xs font-bold">POWERED BY</span>
+<div class="flex items-center gap-4">
+<span class="text-sm font-black tracking-tighter">PYTORCH</span>
+<span class="text-sm font-black tracking-tighter">HUGGINGFACE</span>
+<span class="text-sm font-black tracking-tighter">SCIKIT-LEARN</span>
+</div>
+</div>
+<div class="flex gap-8">
+<a class="text-xs font-medium text-slate-500 hover:text-primary" href="#">Documentation</a>
+<a class="text-xs font-medium text-slate-500 hover:text-primary" href="#">Export History</a>
+<a class="text-xs font-medium text-slate-500 hover:text-primary" href="#">API Reference</a>
+</div>
+</div>
+</footer>
+</body></html>
