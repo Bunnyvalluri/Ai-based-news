@@ -2,8 +2,12 @@
 import type { GeminiAnalysis } from "@/lib/types";
 
 export default function GeminiPanel({ analysis }: { analysis: GeminiAnalysis }) {
-  // If analysis is minimal/empty
-  const hasContent = analysis.language_analysis || analysis.credibility_signals?.length > 0;
+  // Defensive checks for missing or null data
+  if (!analysis) return null;
+  const hasContent = (analysis.language_analysis && analysis.language_analysis.length > 0) ||
+    (analysis.credibility_signals && analysis.credibility_signals.length > 0) ||
+    (analysis.red_flags && analysis.red_flags.length > 0);
+
   if (!hasContent) return null;
 
   return (

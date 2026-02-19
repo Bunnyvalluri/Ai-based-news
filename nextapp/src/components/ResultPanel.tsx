@@ -11,7 +11,7 @@ export default function ResultPanel({
   onReset: () => void;
 }) {
   const isFake = result.label === "FAKE";
-  const confidencePercent = (result.confidence * 100).toFixed(1);
+  const confidencePercent = (Number(result.confidence) || 0).toFixed(1);
 
   // Dynamic colors for Light/Dark mode
   const colorBase = isFake ? "red" : "emerald";

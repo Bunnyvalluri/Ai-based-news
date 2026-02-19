@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { href: "#detector", label: "Detector" },
   { href: "#how-it-works", label: "How It Works" },
-  { href: "#metrics", label: "Performance" },
+  { href: "#pricing", label: "Pricing" },
   { href: "#about", label: "About" },
 ];
 
@@ -38,7 +38,7 @@ export default function Header() {
         <div className="flex items-center h-16 gap-4 md:gap-8">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5 flex-shrink-0 group">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:rotate-[360deg] transition-transform duration-700 ease-in-out">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 transition-transform duration-700 ease-in-out">
               <svg viewBox="0 0 24 24" fill="none" className="w-4.5 h-4.5 text-white" stroke="currentColor" strokeWidth="2.5">
                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>

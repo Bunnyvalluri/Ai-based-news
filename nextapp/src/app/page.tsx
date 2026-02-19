@@ -7,6 +7,11 @@ import HowItWorks from "@/components/HowItWorks";
 import MetricsSection from "@/components/MetricsSection";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
+import TrustCloud from "@/components/TrustCloud";
+import Testimonials from "@/components/Testimonials";
+import FAQSection from "@/components/FAQSection";
+import Newsletter from "@/components/Newsletter";
+import Pricing from "@/components/Pricing";
 import { fetchStatus } from "@/lib/api";
 import type { SystemStatus } from "@/lib/types";
 
@@ -29,10 +34,15 @@ export default function Home() {
       <Header />
       <main>
         <Hero status={status} accuracy={bestAccuracy} />
+        <TrustCloud />
         <Detector modelReady={status?.model_ready ?? false} />
         <HowItWorks />
+        <Testimonials />
         <MetricsSection />
+        <FAQSection />
+        <Pricing />
         <About />
+        <Newsletter />
       </main>
       <Footer />
     </div>

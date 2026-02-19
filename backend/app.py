@@ -51,8 +51,32 @@ app = Flask(
     static_folder=FRONTEND_DIR,
     static_url_path=''
 )
-CORS(app)
-app.json_encoder = NumpyEncoder  # type: ignore
+CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+# Modern Flask way to set custom JSON provider
+class CustomJSONProvider(_json.JSONEncoder):
+    def default(self, obj):
+        import numpy as np
+        if isinstance(obj, np.integer):  return int(obj)
+        if isinstance(obj, np.floating): return float(obj)
+        if isinstance(obj, np.bool_):    return bool(obj)
+        if isinstance(obj, np.ndarray):  return obj.tolist()
+        return super().default(obj)
+
+# Support both older and newer Flask versions
+try:
+    from flask.json.provider import DefaultJSONProvider
+    class NumpyJSONProvider(DefaultJSONProvider):
+        def default(self, obj):
+            import numpy as np
+            if isinstance(obj, np.integer):  return int(obj)
+            if isinstance(obj, np.floating): return float(obj)
+            if isinstance(obj, np.bool_):    return bool(obj)
+            if isinstance(obj, np.ndarray):  return obj.tolist()
+            return super().default(obj)
+    app.json = NumpyJSONProvider(app)
+except (ImportError, AttributeError):
+    app.json_encoder = CustomJSONProvider
 
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024  # 2MB max upload
 ALLOWED_EXTENSIONS = {'txt', 'csv'}

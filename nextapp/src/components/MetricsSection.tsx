@@ -48,6 +48,6 @@ export default function MetricsSection() {
           ))}
         </div>
       </div>
-    </section>
+    </section >
   );
 }
