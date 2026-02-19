@@ -1,38 +1,35 @@
 @import "tailwindcss";
 
-/* ── Tailwind v4 dark mode strategy ── */
-@variant dark (&:where(.dark, .dark *));
-
 /* ────────────────────────────────────────────
-   STITCH DESIGN SYSTEM TOKENS (VeriFact AI)
+   CSS Custom Properties — PERMANENT LIGHT THEME
    ──────────────────────────────────────────── */
 :root {
-  /* Core Colors from Stitch */
-  --color-primary: #135bec;
-  /* Blue */
-  --bg-base: #101622;
-  /* Dark Background */
-  --bg-card: #1e293b;
-  /* Slate-800 equivalent for cards */
-  --bg-light: #f6f6f8;
-  /* Light Background (unused in dark mode) */
-
-  /* Text */
-  --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
-  /* Slate-400 */
+  /* Permanent Light Mode Values */
+  --bg-base: #f8fafc;
+  /* slightly cool gray-white */
+  --bg-card: #ffffff;
+  --bg-card2: #f1f5f9;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --text-primary: #0f172a;
+  /* Slate-900 */
+  --text-secondary: #334155;
+  /* Slate-700 */
   --text-muted: #64748b;
   /* Slate-500 */
-
-  /* Borders */
-  --border: rgba(255, 255, 255, 0.1);
-  --border-focus: #135bec;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-focus: rgba(99, 102, 241, 0.5);
+  /* Indigo-500 */
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  --orb-opacity: 0.6;
+  /* Higher opacity for light mode gradients */
 }
 
 /* ── Base / Reset ── */
 @layer base {
   :root {
     --font-inter: 'Inter', sans-serif;
+    --font-space: 'Space Grotesk', sans-serif;
   }
 
   * {
@@ -43,7 +40,6 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     background-color: var(--bg-base);
-    /* Permanent Dark */
     color: var(--text-primary);
   }
 
@@ -54,42 +50,183 @@
   }
 
   ::selection {
-    background: rgba(19, 91, 236, 0.3);
-    /* Primary with opacity */
-    color: #fff;
+    background: rgba(99, 102, 241, 0.2);
+    color: inherit;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
   }
 }
 
-/* ── Utility Classes matching Stitch ── */
-.text-primary {
-  color: var(--color-primary);
+/* ── Use-Anywhere Helpers ── */
+.bg-base {
+  background-color: var(--bg-base);
 }
 
-.bg-primary {
-  background-color: var(--color-primary);
+.bg-card {
+  background-color: var(--bg-card);
 }
 
-.border-primary {
-  border-color: var(--color-primary);
+.text-prim {
+  color: var(--text-primary);
 }
 
-.glass-panel {
-  background: rgba(30, 41, 59, 0.7);
-  backdrop-filter: blur(12px);
+.text-sec {
+  color: var(--text-secondary);
+}
+
+.border-theme {
+  border-color: var(--border);
+}
+
+/* ── Gradient Text ── */
+.gradient-text {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gemini-gradient-text {
+  background: linear-gradient(135deg, #1d4ed8 0%, #7e22ce 50%, #b91c1c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass Card (Light Mode) ── */
+.glass {
+  background: var(--bg-glass);
   border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Orbs (Subtler for Light Mode) ── */
+@keyframes orbFloat1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(60px, -50px) scale(1.05);
+  }
+
+  66% {
+    transform: translate(-30px, 30px) scale(0.95);
+  }
+}
+
+@keyframes orbFloat2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(-50px, 60px) scale(0.95);
+  }
+
+  66% {
+    transform: translate(60px, -30px) scale(1.05);
+  }
+}
+
+.orb-1 {
+  animation: orbFloat1 20s ease-in-out infinite;
+  opacity: var(--orb-opacity);
+}
+
+.orb-2 {
+  animation: orbFloat2 25s ease-in-out infinite;
+  opacity: var(--orb-opacity);
 }
 
 /* ── Animations ── */
-@keyframes fadeIn {
+.confidence-bar {
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.credibility-bar {
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes chipPop {
   from {
     opacity: 0;
+    transform: scale(0.9);
   }
 
   to {
     opacity: 1;
+    transform: scale(1);
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out;
+.chip-animate {
+  animation: chipPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes floatCard {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(0.5deg);
+  }
+}
+
+.float-c1 {
+  animation: floatCard 7s ease-in-out infinite;
+}
+
+.float-c2 {
+  animation: floatCard 7s 2.5s ease-in-out infinite;
+}
+
+.float-c3 {
+  animation: floatCard 7s 5s ease-in-out infinite;
+}
+
+.badge-pulse-dot {
+  box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(99, 102, 241, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
 }
