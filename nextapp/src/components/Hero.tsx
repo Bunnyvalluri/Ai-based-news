@@ -131,24 +131,24 @@ export default function Hero({ status, accuracy }: HeroProps) {
 
           {/* Right: floating cards (Visibility optimized for Dark/Light) */}
           <div className="relative h-[420px] hidden lg:block" aria-hidden="true">
-            <div className="float-c1 absolute top-[10%] left-[5%] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-red-100 dark:border-red-900/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl shadow-red-500/5 dark:shadow-black/40 min-w-[200px]">
-              <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 flex items-center justify-center text-red-500 dark:text-red-400 font-bold text-lg">✗</div>
+            <div className="float-c1 absolute top-[10%] left-[5%] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-red-100 dark:border-red-900/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl shadow-red-500/5 dark:shadow-black/40 min-w-[200px] group hover:scale-105 transition-all duration-300">
+              <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 flex items-center justify-center text-red-500 dark:text-red-400 font-bold text-lg group-hover:rotate-[360deg] transition-transform duration-700 ease-in-out">✗</div>
               <div>
                 <div className="text-red-600 dark:text-red-400 font-bold text-sm">FAKE</div>
                 <div className="text-slate-500 dark:text-slate-400 text-xs font-semibold">Confidence: 97.2%</div>
               </div>
             </div>
 
-            <div className="float-c2 absolute top-[42%] right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-emerald-100 dark:border-emerald-900/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl shadow-emerald-500/5 dark:shadow-black/40 min-w-[200px]">
-              <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-lg">✓</div>
+            <div className="float-c2 absolute top-[42%] right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-emerald-100 dark:border-emerald-900/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl shadow-emerald-500/5 dark:shadow-black/40 min-w-[200px] group hover:scale-105 transition-all duration-300">
+              <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-lg group-hover:rotate-[360deg] transition-transform duration-700 ease-in-out">✓</div>
               <div>
                 <div className="text-emerald-700 dark:text-emerald-400 font-bold text-sm">REAL</div>
                 <div className="text-slate-500 dark:text-slate-400 text-xs font-semibold">Confidence: 94.8%</div>
               </div>
             </div>
 
-            <div className="float-c3 absolute bottom-[8%] left-[18%] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-indigo-100 dark:border-indigo-900/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl shadow-indigo-500/5 dark:shadow-black/40 min-w-[230px]">
-              <div className="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 flex items-center justify-center text-lg">🔍</div>
+            <div className="float-c3 absolute bottom-[8%] left-[18%] bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-indigo-100 dark:border-indigo-900/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl shadow-indigo-500/5 dark:shadow-black/40 min-w-[230px] group hover:scale-105 transition-all duration-300">
+              <div className="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 flex items-center justify-center text-lg group-hover:rotate-[360deg] transition-transform duration-700 ease-in-out">🔍</div>
               <div>
                 <div className="text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase">Gemini AI Analysis</div>
                 <div className="text-slate-500 dark:text-slate-400 text-xs font-semibold">Credibility: 8/10</div>

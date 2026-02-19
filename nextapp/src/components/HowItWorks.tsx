@@ -25,7 +25,7 @@ export default function HowItWorks() {
           {/* Step 1 */}
           <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
             <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">01</div>
-            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:rotate-[360deg] transition-transform duration-700 ease-in-out" style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
                 <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
@@ -42,7 +42,7 @@ export default function HowItWorks() {
           {/* Step 2 */}
           <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
             <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">02</div>
-            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#8b5cf6,#a855f7)' }}>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:rotate-[360deg] transition-transform duration-700 ease-in-out" style={{ background: 'linear-gradient(135deg,#8b5cf6,#a855f7)' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <polyline points="4 7 4 4 20 4 20 7" />
                 <line x1="9" y1="20" x2="15" y2="20" />
@@ -60,7 +60,7 @@ export default function HowItWorks() {
           {/* Step 3 */}
           <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
             <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">03</div>
-            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#a855f7,#ec4899)' }}>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:rotate-[360deg] transition-transform duration-700 ease-in-out" style={{ background: 'linear-gradient(135deg,#a855f7,#ec4899)' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <rect x="3" y="3" width="18" height="18" rx="2" />
                 <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
@@ -77,7 +77,7 @@ export default function HowItWorks() {
           {/* Step 4 */}
           <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
             <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">04</div>
-            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#ec4899,#f43f5e)' }}>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:rotate-[360deg] transition-transform duration-700 ease-in-out" style={{ background: 'linear-gradient(135deg,#ec4899,#f43f5e)' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
               </svg>
@@ -93,7 +93,7 @@ export default function HowItWorks() {
           {/* Step 5 */}
           <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
             <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">05</div>
-            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#f43f5e,#f97316)' }}>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:rotate-[360deg] transition-transform duration-700 ease-in-out" style={{ background: 'linear-gradient(135deg,#f43f5e,#f97316)' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                 <polyline points="3 9 12 15 21 9" />

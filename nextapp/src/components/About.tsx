@@ -51,7 +51,7 @@ export default function About() {
               viewport={{ once: true }}
               className="bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 hover:border-indigo-100 dark:hover:border-indigo-500/30 shadow-sm hover:shadow-xl dark:hover:shadow-indigo-500/10 transition-all duration-300 group"
             >
-              <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-800 transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 flex items-center justify-center text-2xl mb-5 group-hover:rotate-[360deg] group-hover:bg-indigo-100 dark:group-hover:bg-indigo-800 transition-all duration-700 ease-in-out">
                 {f.icon}
               </div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition-colors">
