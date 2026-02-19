@@ -1,12 +1,13 @@
-"use client";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const navLinks = [
-  { href: "#", label: "Home" },
-  { href: "#how-it-works", label: "How it Works" },
-  { href: "#api", label: "API" },
-  { href: "#about", label: "About" },
+  { href: "/", label: "Home" },
+  { href: "/#how-it-works", label: "How it Works" },
+  { href: "/#api", label: "API" },
+  { href: "/#about", label: "About" },
+  { href: "/dashboard/performance", label: "Dashboard" },
 ];
 
 export default function Header() {
@@ -25,8 +26,8 @@ export default function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       className={`fixed top-0 inset-x-0 z-50 w-full border-b transition-all duration-300 ${scrolled
-          ? "border-slate-800 bg-[#101622]/90 backdrop-blur-md"
-          : "border-transparent bg-transparent"
+        ? "border-slate-800 bg-[#101622]/90 backdrop-blur-md"
+        : "border-transparent bg-transparent"
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,24 +39,24 @@ export default function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h1 className="text-xl font-bold tracking-tight text-white flex items-center">
+            <Link href="/" className="text-xl font-bold tracking-tight text-white flex items-center">
               VeriFact<span className="text-[#135bec] text-sm ml-1 font-medium">AI</span>
-            </h1>
+            </Link>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((l) => (
-              <a
+              <Link
                 key={l.label}
                 href={l.href}
-                className={`text-sm font-medium transition-colors ${l.label === "Home"
-                    ? "text-[#135bec]"
-                    : "text-slate-400 hover:text-[#135bec]"
+                className={`text-sm font-medium transition-colors ${l.label === "Dashboard"
+                  ? "px-3 py-1.5 rounded bg-[#135bec]/10 text-[#135bec] hover:bg-[#135bec]/20"
+                  : "text-slate-400 hover:text-[#135bec]"
                   }`}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
