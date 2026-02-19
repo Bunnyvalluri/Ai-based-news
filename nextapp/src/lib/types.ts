@@ -49,7 +49,6 @@ export interface MetricsData {
 }
 
 export interface SystemStatus {
-  status: string;
   model_ready: boolean;
   gemini_available: boolean;
   version: string;

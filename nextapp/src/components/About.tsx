@@ -21,21 +21,21 @@ const MARQUEE_ITEMS = [...TECH_STACK, ...TECH_STACK, ...TECH_STACK];
 
 export default function About() {
   return (
-    <section id="about" className="py-24 bg-white relative overflow-hidden" aria-labelledby="about-heading">
+    <section id="about" className="py-24 bg-white dark:bg-slate-900 relative overflow-hidden transition-colors duration-300" aria-labelledby="about-heading">
 
-      {/* Background blobs - faint */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-purple-100 rounded-full blur-[120px] opacity-60" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-100 rounded-full blur-[120px] opacity-60" />
+      {/* Background blobs - faint (Dark/Light aware) */}
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-purple-100 dark:bg-purple-900/20 rounded-full blur-[120px] opacity-60 pointer-events-none" />
+      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-100 dark:bg-indigo-900/20 rounded-full blur-[120px] opacity-60 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold uppercase tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-semibold uppercase tracking-widest mb-4">
             About the Project
           </div>
-          <h2 id="about-heading" className="text-3xl md:text-4xl font-bold mb-4 text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h2 id="about-heading" className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             Why Build TruthLens?
           </h2>
-          <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
             Misinformation spreads 6x faster than truth. We built TruthLens to give readers a
             fast, unbiased, and explainable tool to verify what they read online.
           </p>
@@ -49,15 +49,15 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
               viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 border border-slate-100 hover:border-indigo-100 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 group"
+              className="bg-white dark:bg-slate-800/50 rounded-2xl p-8 border border-slate-100 dark:border-slate-700 hover:border-indigo-100 dark:hover:border-indigo-500/30 shadow-sm hover:shadow-xl dark:hover:shadow-indigo-500/10 transition-all duration-300 group"
             >
-              <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 group-hover:bg-indigo-100 transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-800 transition-all duration-300">
                 {f.icon}
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-indigo-700 transition-colors">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition-colors">
                 {f.title}
               </h3>
-              <p className="text-slate-500 text-sm leading-relaxed">
+              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
                 {f.desc}
               </p>
             </motion.div>
@@ -66,26 +66,22 @@ export default function About() {
 
         {/* Animated Tech Stack Section */}
         <div className="text-center">
-          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">Built With Modern Tech</h4>
+          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-8">Built With Modern Tech</h4>
 
           <div className="relative max-w-4xl mx-auto overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
             <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused]">
               {MARQUEE_ITEMS.map((tech, i) => (
                 <div
                   key={`${tech}-${i}`}
-                  className="px-6 py-3 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm flex items-center gap-2 whitespace-nowrap hover:border-indigo-300 hover:text-indigo-600 hover:shadow-md transition-colors duration-300 cursor-default"
+                  className="px-6 py-3 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-bold shadow-sm flex items-center gap-2 whitespace-nowrap hover:border-indigo-300 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:shadow-md transition-colors duration-300 cursor-default"
                 >
-                  <span className="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-indigo-400"></span>
+                  <span className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-500 group-hover:bg-indigo-400"></span>
                   {tech}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Add CSS for marquee directly here or relies on globals.css extended config. 
-                I'll rely on inline style for keyframes to ensure it works without config changes 
-                if 'animate-marquee' isn't in tailwind config.
-            */}
           <style jsx global>{`
               @keyframes marquee {
                 0% { transform: translateX(0); }

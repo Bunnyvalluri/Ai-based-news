@@ -1,19 +1,31 @@
-"""Vercel serverless: GET /api/metrics"""
-import sys, os, json
+from flask import Flask, jsonify
+import sys
+import os
 
 BACKEND_DIR = os.path.join(os.path.dirname(__file__), "..", "backend")
 sys.path.insert(0, BACKEND_DIR)
 
-METRICS_PATH = os.path.join(BACKEND_DIR, "models", "model_metrics.json")
+try:
+    from predictor import get_model_metrics
+except ImportError:
+    def get_model_metrics(): return {}
 
+app = Flask(__name__)
 
-def handler(request, response):
-    response.headers["Content-Type"] = "application/json"
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    if not os.path.exists(METRICS_PATH):
-        response.status_code = 404
-        return json.dumps({"error": "Model not trained yet"})
-    with open(METRICS_PATH) as f:
-        data = json.load(f)
-    response.status_code = 200
-    return json.dumps(data)
+@app.route('/api/metrics', methods=['GET', 'OPTIONS'])
+def handle_metrics():
+    if request.method == 'OPTIONS':
+        return _build_cors_response()
+
+    metrics = get_model_metrics()
+    return _corsify_actual_response(jsonify(metrics))
+
+def _build_cors_response():
+    resp = jsonify({})
+    resp.headers.add("Access-Control-Allow-Origin", "*")
+    resp.headers.add("Access-Control-Allow-Methods", "GET, OPTIONS")
+    return resp
+
+def _corsify_actual_response(resp):
+    resp.headers.add("Access-Control-Allow-Origin", "*")
+    return resp

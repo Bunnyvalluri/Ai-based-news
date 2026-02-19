@@ -1,28 +1,51 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 /* ────────────────────────────────────────────
-   CSS Custom Properties — PERMANENT LIGHT THEME
+   CSS Custom Properties — Light & Dark Themes
    ──────────────────────────────────────────── */
 :root {
-  /* Permanent Light Mode Values */
+  /* Light Mode (Default) */
   --bg-base: #f8fafc;
-  /* slightly cool gray-white */
+  /* Slate-50 */
   --bg-card: #ffffff;
-  --bg-card2: #f1f5f9;
+  --bg-card-hover: #f1f5f9;
   --bg-glass: rgba(255, 255, 255, 0.7);
   --text-primary: #0f172a;
-  /* Slate-900 */
+  /* Slate-900 - High Contrast */
   --text-secondary: #334155;
   /* Slate-700 */
   --text-muted: #64748b;
   /* Slate-500 */
-  --border: rgba(0, 0, 0, 0.08);
+  --border: #e2e8f0;
+  /* Slate-200 */
   --border-focus: rgba(99, 102, 241, 0.5);
-  /* Indigo-500 */
   --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
   --orb-opacity: 0.6;
-  /* Higher opacity for light mode gradients */
+}
+
+.dark {
+  /* Dark Mode - High Visibility / Deep Blue-Grey */
+  --bg-base: #020617;
+  /* Slate-950 (Rich Dark) */
+  --bg-card: #0f172a;
+  /* Slate-900 */
+  --bg-card-hover: #1e293b;
+  /* Slate-800 */
+  --bg-glass: rgba(15, 23, 42, 0.6);
+  --text-primary: #f8fafc;
+  /* Slate-50 - Max White */
+  --text-secondary: #cbd5e1;
+  /* Slate-300 - Readable Grey */
+  --text-muted: #94a3b8;
+  /* Slate-400 */
+  --border: #1e293b;
+  /* Slate-800 */
+  --border-focus: rgba(129, 140, 248, 0.6);
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  /* Stronger shadow for depth */
+  --orb-opacity: 0.4;
 }
 
 /* ── Base / Reset ── */
@@ -39,194 +62,56 @@
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
-    background-color: var(--bg-base);
-    color: var(--text-primary);
   }
 
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
     font-family: var(--font-inter);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
-    background: rgba(99, 102, 241, 0.2);
+    background: rgba(99, 102, 241, 0.3);
     color: inherit;
   }
-
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 3px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-  }
 }
 
-/* ── Use-Anywhere Helpers ── */
-.bg-base {
-  background-color: var(--bg-base);
-}
-
-.bg-card {
-  background-color: var(--bg-card);
-}
-
-.text-prim {
-  color: var(--text-primary);
-}
-
-.text-sec {
-  color: var(--text-secondary);
-}
-
-.border-theme {
-  border-color: var(--border);
-}
-
-/* ── Gradient Text ── */
-.gradient-text {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+/* ── Utilities ── */
+.text-gradient {
+  background: linear-gradient(135deg, #4f46e5 0%, #a855f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.gemini-gradient-text {
-  background: linear-gradient(135deg, #1d4ed8 0%, #7e22ce 50%, #b91c1c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.dark .text-gradient {
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+  /* Brighter gradient for dark mode */
 }
 
-/* ── Glass Card (Light Mode) ── */
 .glass {
   background: var(--bg-glass);
-  border: 1px solid var(--border);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
 }
 
-/* ── Orbs (Subtler for Light Mode) ── */
-@keyframes orbFloat1 {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  33% {
-    transform: translate(60px, -50px) scale(1.05);
-  }
-
-  66% {
-    transform: translate(-30px, 30px) scale(0.95);
-  }
-}
-
-@keyframes orbFloat2 {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  33% {
-    transform: translate(-50px, 60px) scale(0.95);
-  }
-
-  66% {
-    transform: translate(60px, -30px) scale(1.05);
-  }
-}
-
-.orb-1 {
-  animation: orbFloat1 20s ease-in-out infinite;
-  opacity: var(--orb-opacity);
-}
-
-.orb-2 {
-  animation: orbFloat2 25s ease-in-out infinite;
-  opacity: var(--orb-opacity);
-}
-
 /* ── Animations ── */
-.confidence-bar {
-  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.credibility-bar {
-  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes chipPop {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.chip-animate {
-  animation: chipPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-@keyframes floatCard {
-
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-10px) rotate(0.5deg);
-  }
-}
-
-.float-c1 {
-  animation: floatCard 7s ease-in-out infinite;
-}
-
-.float-c2 {
-  animation: floatCard 7s 2.5s ease-in-out infinite;
-}
-
-.float-c3 {
-  animation: floatCard 7s 5s ease-in-out infinite;
-}
-
-.badge-pulse-dot {
-  box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
-  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse-ring {
+@keyframes marquee {
   0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
-  }
-
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 6px rgba(99, 102, 241, 0);
+    transform: translateX(0);
   }
 
   100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    transform: translateX(-50%);
   }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }

@@ -13,14 +13,22 @@ export default function ResultPanel({
   const isFake = result.label === "FAKE";
   const confidencePercent = (result.confidence * 100).toFixed(1);
 
-  // Light mode colors only
+  // Dynamic colors for Light/Dark mode
   const colorBase = isFake ? "red" : "emerald";
-  const bgColor = isFake ? "bg-red-50" : "bg-emerald-50";
-  const borderColor = isFake ? "border-red-100" : "border-emerald-100";
-  const textColor = isFake ? "text-red-700" : "text-emerald-700";
-  const iconBg = isFake ? "bg-red-100" : "bg-emerald-100";
-  const progressBg = isFake ? "bg-red-200" : "bg-emerald-200";
-  const progressFill = isFake ? "bg-red-500" : "bg-emerald-500";
+
+  // Using explicit classes for clarity in Tailwind 3/4
+  const containerClasses = isFake
+    ? "bg-red-50 dark:bg-red-900/10 border-red-200 dark:border-red-800"
+    : "bg-emerald-50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800";
+
+  const iconBg = isFake
+    ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400"
+    : "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400";
+
+  const textTitle = isFake ? "text-red-700 dark:text-red-400" : "text-emerald-700 dark:text-emerald-400";
+
+  const progressBg = isFake ? "bg-red-200 dark:bg-red-900/30" : "bg-emerald-200 dark:bg-emerald-900/30";
+  const progressFill = isFake ? "bg-red-500 dark:bg-red-500" : "bg-emerald-500 dark:bg-emerald-500";
 
   return (
     <motion.div
@@ -30,33 +38,33 @@ export default function ResultPanel({
       className="mt-8 space-y-6"
     >
       {/* 1. Verdict Card */}
-      <div className={`relative overflow-hidden rounded-2xl border ${borderColor} ${bgColor} p-6 md:p-8 shadow-sm transition-all duration-300 hover:shadow-md`}>
+      <div className={`relative overflow-hidden rounded-2xl border ${containerClasses} p-6 md:p-8 shadow-sm transition-all duration-300 hover:shadow-md`}>
         <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between relative z-10">
 
           <div className="flex items-center gap-4">
-            <div className={`w-14 h-14 md:w-16 md:h-16 rounded-full ${iconBg} border border-white/50 flex items-center justify-center shadow-sm`}>
+            <div className={`w-14 h-14 md:w-16 md:h-16 rounded-full ${iconBg} border border-white/50 dark:border-white/10 flex items-center justify-center shadow-sm`}>
               {isFake ? (
-                <svg className="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
-                <svg className="w-8 h-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               )}
             </div>
             <div>
-              <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-1">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1">
                 Classification Result
               </h3>
-              <div className={`text-3xl md:text-4xl font-extrabold ${textColor}`} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <div className={`text-3xl md:text-4xl font-extrabold ${textTitle}`} style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 {result.label} NEWS
               </div>
             </div>
           </div>
 
           <div className="w-full md:w-auto min-w-[240px]">
-            <div className="flex justify-between text-sm font-bold text-slate-600 mb-2">
+            <div className="flex justify-between text-sm font-bold text-slate-600 dark:text-slate-300 mb-2">
               <span>Confidence Score</span>
               <span>{confidencePercent}%</span>
             </div>
@@ -68,12 +76,11 @@ export default function ResultPanel({
                 className={`h-full ${progressFill} shadow-[0_0_10px_rgba(0,0,0,0.1)]`}
               />
             </div>
-            <p className="sr-only">Confidence: {confidencePercent}%</p>
           </div>
         </div>
 
         {/* Decorative background pattern */}
-        <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
+        <div className="absolute top-0 right-0 p-8 opacity-5 dark:opacity-10 pointer-events-none">
           <svg className={`w-64 h-64 ${isFake ? "text-red-900" : "text-emerald-900"}`} fill="currentColor" viewBox="0 0 24 24">
             {isFake
               ? <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
@@ -92,7 +99,7 @@ export default function ResultPanel({
       <div className="text-center pt-4">
         <button
           onClick={onReset}
-          className="text-slate-500 hover:text-indigo-600 font-medium text-sm flex items-center justify-center gap-2 mx-auto transition-colors focus:outline-none focus:underline"
+          className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium text-sm flex items-center justify-center gap-2 mx-auto transition-colors focus:outline-none focus:underline"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />

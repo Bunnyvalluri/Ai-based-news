@@ -90,28 +90,28 @@ export default function Detector({ modelReady }: { modelReady: boolean }) {
   ];
 
   return (
-    <section id="detector" className="py-16 md:py-24 bg-white" aria-label="Fake News Detector Tool">
+    <section id="detector" className="py-16 md:py-24 bg-white dark:bg-slate-900 transition-colors duration-300" aria-label="Fake News Detector Tool">
       <div id="a11y-announcer" className="sr-only" aria-live="polite"></div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-600 text-xs font-semibold uppercase tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-300 text-xs font-semibold uppercase tracking-widest mb-4">
             Detector
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-slate-900 dark:text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             Analyze Your Article
           </h2>
-          <p className="text-slate-600 max-w-lg mx-auto font-medium">
+          <p className="text-slate-600 dark:text-slate-400 max-w-lg mx-auto font-medium">
             Paste any news headline or full article. Our dual AI will classify it in seconds.
           </p>
         </div>
 
         {!modelReady && (
-          <div className="mb-6 flex items-center gap-3 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm" role="alert">
+          <div className="mb-6 flex items-center gap-3 p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 text-sm" role="alert">
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
             </svg>
-            <span>Model not trained. Run <code className="bg-amber-100 px-1.5 py-0.5 rounded text-xs font-mono text-amber-900">START.bat</code> first.</span>
+            <span>Model not trained. Run <code className="bg-amber-100 dark:bg-amber-800/50 px-1.5 py-0.5 rounded text-xs font-mono text-amber-900 dark:text-amber-100">START.bat</code> first.</span>
           </div>
         )}
 
@@ -120,9 +120,9 @@ export default function Detector({ modelReady }: { modelReady: boolean }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xl"
+          className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-xl dark:shadow-slate-900/30"
         >
-          <div className="flex gap-1 p-2 md:p-3 border-b border-slate-100 bg-slate-50" role="tablist">
+          <div className="flex gap-1 p-2 md:p-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50" role="tablist">
             {TABS.map((t) => (
               <button
                 key={t.id}
@@ -131,8 +131,8 @@ export default function Detector({ modelReady }: { modelReady: boolean }) {
                 aria-selected={tab === t.id}
                 aria-controls={`panel-${t.id}`}
                 className={`flex-1 flex items-center justify-center gap-2 px-3 md:px-4 py-2 rounded-lg md:rounded-xl text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${tab === t.id
-                    ? "bg-white text-indigo-600 border border-slate-200 shadow-sm"
-                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"
+                    ? "bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-slate-700 shadow-sm"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900"
                   }`}
               >
                 {t.icon}
@@ -154,14 +154,14 @@ export default function Detector({ modelReady }: { modelReady: boolean }) {
                       placeholder={"Paste a news headline or full article here…\n\nExample: 'Scientists at MIT published findings in Nature showing a direct link between sleep quality and cognitive function in adults aged 35–54...'"}
                       rows={8}
                       maxLength={30000}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm leading-relaxed p-4 resize-y outline-none placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200 min-h-[180px]"
+                      className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 text-sm leading-relaxed p-4 resize-y outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200 min-h-[180px]"
                     />
-                    <div className="flex justify-between items-center mt-2 px-1 text-xs text-slate-500">
+                    <div className="flex justify-between items-center mt-2 px-1 text-xs text-slate-500 dark:text-slate-400">
                       <span>{text.length} chars · {wordCount} words</span>
                       {text && (
                         <button
                           onClick={() => { setText(""); setResult(null); }}
-                          className="text-slate-500 hover:text-slate-700 transition-colors focus:outline-none focus:underline"
+                          className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors focus:outline-none focus:underline"
                         >
                           ✕ Clear
                         </button>
@@ -170,7 +170,7 @@ export default function Detector({ modelReady }: { modelReady: boolean }) {
                   </div>
 
                   {error && (
-                    <div className="mt-3 flex items-center gap-2 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm" role="alert">
+                    <div className="mt-3 flex items-center gap-2 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm" role="alert">
                       <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -181,7 +181,7 @@ export default function Detector({ modelReady }: { modelReady: boolean }) {
                   <button
                     onClick={handleAnalyze}
                     disabled={loading}
-                    className="mt-5 w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-xl shadow-indigo-600/25 hover:shadow-indigo-500/35 hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="mt-5 w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-xl shadow-indigo-600/25 cursor-pointer hover:-translate-y-0.5"
                   >
                     {loading ? (
                       <>
@@ -214,20 +214,20 @@ export default function Detector({ modelReady }: { modelReady: boolean }) {
                     role="button"
                     aria-label="Upload a file"
                     className={`border-2 border-dashed rounded-xl p-8 md:p-12 text-center cursor-pointer transition-all duration-200 ${dragOver
-                        ? "border-indigo-500 bg-indigo-50"
-                        : "border-slate-200 hover:border-indigo-500/50 hover:bg-slate-50"
+                        ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/10"
+                        : "border-slate-200 dark:border-slate-700 hover:border-indigo-500/50 hover:bg-slate-50 dark:hover:bg-slate-800"
                       }`}
                   >
                     <input ref={fileInputRef} type="file" accept=".txt,.csv" hidden onChange={(e) => e.target.files?.[0] && setFile(e.target.files[0])} />
-                    <svg className="w-12 h-12 text-slate-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <svg className="w-12 h-12 text-slate-400 dark:text-slate-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                     </svg>
-                    <p className="text-slate-600 mb-1 font-medium">
-                      Drag & drop or <span className="text-indigo-600 font-semibold">browse files</span>
+                    <p className="text-slate-600 dark:text-slate-300 mb-1 font-medium">
+                      Drag & drop or <span className="text-indigo-600 dark:text-indigo-400 font-semibold">browse files</span>
                     </p>
-                    <p className="text-slate-500 text-sm">Supports .txt and .csv files up to 2MB</p>
+                    <p className="text-slate-500 dark:text-slate-500 text-sm">Supports .txt and .csv files up to 2MB</p>
                     {file && (
-                      <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-medium">
+                      <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 text-sm font-medium">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         {file.name}
                       </div>
@@ -236,7 +236,7 @@ export default function Detector({ modelReady }: { modelReady: boolean }) {
                   <button
                     onClick={handleFileAnalyze}
                     disabled={!file || loading}
-                    className="mt-5 w-full py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="mt-5 w-full py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
                   >
                     {loading ? "Analyzing…" : "Analyze File"}
                   </button>
@@ -245,20 +245,20 @@ export default function Detector({ modelReady }: { modelReady: boolean }) {
 
               {tab === "examples" && (
                 <motion.div key="examples" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-                  <p className="text-slate-600 text-sm mb-4">Click an example to load it into the analyzer:</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">Click an example to load it into the analyzer:</p>
                   <div className="grid sm:grid-cols-2 gap-3">
                     {EXAMPLES.real.map((ex, i) => (
                       <button key={`real-${i}`} onClick={() => { setText(ex); setTab("text"); }}
-                        className="text-left p-4 rounded-xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-300 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <div className="text-[10px] font-bold tracking-widest text-emerald-700 mb-2 px-2 py-0.5 bg-emerald-100 border border-emerald-200 rounded-full inline-block">REAL NEWS</div>
-                        <p className="text-slate-600 text-xs leading-relaxed line-clamp-3 group-hover:text-slate-800 transition-colors">"{ex}"</p>
+                        className="text-left p-4 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-300 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <div className="text-[10px] font-bold tracking-widest text-emerald-700 dark:text-emerald-400 mb-2 px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/40 border border-emerald-200 dark:border-emerald-800/50 rounded-full inline-block">REAL NEWS</div>
+                        <p className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed line-clamp-3 group-hover:text-slate-800 dark:group-hover:text-white transition-colors">"{ex}"</p>
                       </button>
                     ))}
                     {EXAMPLES.fake.map((ex, i) => (
                       <button key={`fake-${i}`} onClick={() => { setText(ex); setTab("text"); }}
-                        className="text-left p-4 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 hover:border-red-300 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-red-500">
-                        <div className="text-[10px] font-bold tracking-widest text-red-700 mb-2 px-2 py-0.5 bg-red-100 border border-red-200 rounded-full inline-block">FAKE NEWS</div>
-                        <p className="text-slate-600 text-xs leading-relaxed line-clamp-3 group-hover:text-slate-800 transition-colors">"{ex}"</p>
+                        className="text-left p-4 rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 hover:border-red-300 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <div className="text-[10px] font-bold tracking-widest text-red-700 dark:text-red-400 mb-2 px-2 py-0.5 bg-red-100 dark:bg-red-900/40 border border-red-200 dark:border-red-800/50 rounded-full inline-block">FAKE NEWS</div>
+                        <p className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed line-clamp-3 group-hover:text-slate-800 dark:group-hover:text-white transition-colors">"{ex}"</p>
                       </button>
                     ))}
                   </div>
