@@ -31,7 +31,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#070711]">
+    <div className="min-h-screen text-slate-900 dark:text-slate-200 bg-white dark:bg-[#070711] transition-colors duration-300">
       <Header />
       <main>
         <Hero status={status} accuracy={bestAccuracy} />

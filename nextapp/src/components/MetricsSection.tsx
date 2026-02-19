@@ -19,46 +19,54 @@ export default function MetricsSection({ metrics, loading }: MetricsSectionProps
   return (
     <>
       {/* ── How it works ── */}
-      <section id="how-it-works" className="py-24 bg-gradient-to-b from-transparent via-indigo-500/[0.02] to-transparent">
+      <section
+        id="how-it-works"
+        className="py-16 md:py-24 bg-gradient-to-b from-transparent via-indigo-50/50 dark:via-indigo-500/[0.02] to-transparent"
+        aria-labelledby="how-it-works-heading"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 md:mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/25 text-indigo-400 text-xs font-semibold uppercase tracking-widest mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/25 text-indigo-600 dark:text-indigo-400 text-xs font-semibold uppercase tracking-widest mb-4">
               Pipeline
             </div>
-            <h2 className="text-4xl font-bold mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <h2 id="how-it-works-heading" className="text-3xl md:text-4xl font-bold mb-3 text-slate-900 dark:text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               How TruthLens Works
             </h2>
-            <p className="text-slate-400 max-w-xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
               A 5-stage dual-AI pipeline processes your article in under 3 seconds.
             </p>
           </motion.div>
 
           <div className="flex flex-wrap justify-center gap-2 lg:gap-0">
             {HOW_STEPS.map((step, i) => (
-              <div key={i} className="flex items-center">
+              <div key={i} className="flex flex-col lg:flex-row items-center">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="glass rounded-2xl p-6 text-center w-48 hover:-translate-y-1 transition-all duration-200 hover:border-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/10"
+                  className="bg-white dark:glass rounded-2xl p-6 text-center w-48 border border-slate-200 dark:border-white/10 hover:-translate-y-1 transition-all duration-200 hover:border-indigo-300 dark:hover:border-indigo-500/25 shadow-md dark:shadow-none hover:shadow-xl hover:shadow-indigo-500/10"
                 >
-                  <div className="text-xs font-bold tracking-widest text-slate-600 uppercase mb-3">
+                  <div className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-600 uppercase mb-3" aria-hidden="true">
                     STEP {i + 1}
                   </div>
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/20 flex items-center justify-center text-2xl mx-auto mb-3 shadow-lg">
-                    {step.icon}
+                  <div className="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-gradient-to-br dark:from-indigo-500/20 dark:to-purple-500/20 border border-indigo-100 dark:border-indigo-500/20 flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner dark:shadow-lg">
+                    <span aria-hidden="true">{step.icon}</span>
                   </div>
-                  <h3 className="text-sm font-bold text-white mb-2">{step.title}</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">{step.desc}</p>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">{step.title}</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-500 leading-relaxed">{step.desc}</p>
                 </motion.div>
                 {i < HOW_STEPS.length - 1 && (
-                  <div className="text-slate-700 px-2 text-lg hidden lg:block">→</div>
+                  <div className="text-slate-300 dark:text-slate-700 px-2 text-lg hidden lg:block" aria-hidden="true">→</div>
+                )}
+                {/* Mobile version arrow (down) */}
+                {i < HOW_STEPS.length - 1 && (
+                  <div className="text-slate-300 dark:text-slate-700 py-2 text-lg lg:hidden" aria-hidden="true">↓</div>
                 )}
               </div>
             ))}
@@ -67,25 +75,25 @@ export default function MetricsSection({ metrics, loading }: MetricsSectionProps
       </section>
 
       {/* ── Metrics ── */}
-      <section id="metrics" className="py-24">
+      <section id="metrics" className="py-16 md:py-24" aria-labelledby="metrics-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 md:mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/25 text-indigo-400 text-xs font-semibold uppercase tracking-widest mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/25 text-indigo-600 dark:text-indigo-400 text-xs font-semibold uppercase tracking-widest mb-4">
               Performance
             </div>
-            <h2 className="text-4xl font-bold mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <h2 id="metrics-heading" className="text-3xl md:text-4xl font-bold mb-3 text-slate-900 dark:text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               Model Performance
             </h2>
-            <p className="text-slate-400">Evaluated on a held-out test set, never seen during training.</p>
+            <p className="text-slate-600 dark:text-slate-400">Evaluated on a held-out test set, never seen during training.</p>
           </motion.div>
 
           {loading && (
-            <div className="flex items-center justify-center gap-3 py-16 text-slate-500">
+            <div className="flex items-center justify-center gap-3 py-16 text-slate-500" role="status">
               <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                 <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
               </svg>
@@ -100,12 +108,12 @@ export default function MetricsSection({ metrics, loading }: MetricsSectionProps
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="p-8 rounded-2xl border border-indigo-500/25 bg-gradient-to-br from-indigo-500/[0.07] to-purple-500/[0.04] shadow-xl shadow-indigo-500/10"
+                className="p-6 md:p-8 rounded-2xl border border-indigo-100 dark:border-indigo-500/25 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-500/[0.07] dark:to-purple-500/[0.04] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-500/10"
               >
                 <div className="flex flex-wrap items-center gap-4 mb-8">
-                  <span className="text-4xl">👑</span>
+                  <span className="text-4xl" aria-hidden="true">👑</span>
                   <div>
-                    <h3 className="text-xl font-bold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                       {metrics.best_model}
                     </h3>
                     <p className="text-slate-500 text-sm">Best performing model</p>
@@ -114,13 +122,13 @@ export default function MetricsSection({ metrics, loading }: MetricsSectionProps
                     RECOMMENDED
                   </div>
                 </div>
-                <div className="grid sm:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {Object.entries(metrics.models[metrics.best_model] ?? {})
                     .filter(([k]) => ["accuracy", "precision", "recall", "f1_score"].includes(k))
                     .map(([k, v]) => (
-                      <div key={k} className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                      <div key={k} className="text-center p-4 rounded-xl bg-white dark:bg-white/[0.03] border border-slate-100 dark:border-white/[0.06] shadow-sm dark:shadow-none">
                         <div
-                          className="text-3xl font-bold gradient-text mb-1"
+                          className="text-2xl md:text-3xl font-bold gradient-text mb-1"
                           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                         >
                           {typeof v === "number" ? `${(v * 100).toFixed(1)}%` : "—"}
@@ -142,11 +150,11 @@ export default function MetricsSection({ metrics, loading }: MetricsSectionProps
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.07 }}
-                    className="glass rounded-xl p-5 hover:-translate-y-0.5 hover:border-indigo-500/25 transition-all duration-200"
+                    className="bg-white dark:glass rounded-xl p-5 border border-slate-200 dark:border-white/[0.08] hover:-translate-y-0.5 hover:border-indigo-300 dark:hover:border-indigo-500/25 transition-all duration-200 shadow-sm dark:shadow-none hover:shadow-md"
                   >
                     <div className="flex justify-between items-start mb-4">
-                      <h4 className="font-bold text-sm text-slate-200">{name}</h4>
-                      <span className="text-indigo-400 font-bold text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      <h4 className="font-bold text-sm text-slate-800 dark:text-slate-200">{name}</h4>
+                      <span className="text-indigo-600 dark:text-indigo-400 font-bold text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                         {m.accuracy != null ? `${(m.accuracy * 100).toFixed(0)}%` : "—"}
                       </span>
                     </div>
@@ -155,9 +163,9 @@ export default function MetricsSection({ metrics, loading }: MetricsSectionProps
                       { k: "Recall", v: m.recall },
                       { k: "F1 Score", v: m.f1_score },
                     ].map(({ k, v }) => (
-                      <div key={k} className="flex justify-between py-1.5 border-b border-white/[0.04] last:border-0">
-                        <span className="text-xs text-slate-600">{k}</span>
-                        <span className="text-xs font-semibold text-slate-300">
+                      <div key={k} className="flex justify-between py-1.5 border-b border-slate-100 dark:border-white/[0.04] last:border-0">
+                        <span className="text-xs text-slate-500 dark:text-slate-600">{k}</span>
+                        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                           {v != null ? `${(v * 100).toFixed(1)}%` : "—"}
                         </span>
                       </div>
@@ -170,10 +178,10 @@ export default function MetricsSection({ metrics, loading }: MetricsSectionProps
 
           {!loading && !metrics && (
             <div className="text-center py-16">
-              <p className="text-4xl mb-4">📊</p>
+              <p className="text-4xl mb-4" aria-hidden="true">📊</p>
               <p className="text-slate-500">
                 No metrics available. Train the model first using{" "}
-                <code className="bg-white/[0.05] px-1.5 py-0.5 rounded text-xs">START.bat</code>.
+                <code className="bg-slate-100 dark:bg-white/[0.05] px-1.5 py-0.5 rounded text-xs">START.bat</code>.
               </p>
             </div>
           )}

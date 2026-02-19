@@ -1,5 +1,42 @@
 @import "tailwindcss";
 
+/* ── Tailwind v4 dark mode via .dark class ── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ────────────────────────────────────────────
+   CSS Custom Properties — Light & Dark tokens
+   ──────────────────────────────────────────── */
+:root {
+  /* Light mode */
+  --bg-base: #f0f2f8;
+  --bg-card: #ffffff;
+  --bg-card2: #f8fafc;
+  --bg-glass: rgba(255, 255, 255, 0.6);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --border: rgba(0, 0, 0, 0.09);
+  --border-focus: rgba(99, 102, 241, 0.5);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.05);
+  --orb-opacity: 0.12;
+}
+
+.dark {
+  /* Dark mode */
+  --bg-base: #070711;
+  --bg-card: #0d0d1a;
+  --bg-card2: #0f0f1e;
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-focus: rgba(99, 102, 241, 0.4);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --orb-opacity: 0.20;
+}
+
+/* ── Base / Reset ── */
 @layer base {
   :root {
     --font-inter: 'Inter', sans-serif;
@@ -16,26 +53,27 @@
   }
 
   body {
-    background: #070711;
-    color: #e2e8f0;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
     font-family: var(--font-inter);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
-    background: rgba(99, 102, 241, 0.3);
+    background: rgba(99, 102, 241, 0.25);
     color: #fff;
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #0d0d1a;
+    background: var(--bg-base);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2d2d4e;
+    background: rgba(99, 102, 241, 0.3);
     border-radius: 3px;
   }
 
@@ -44,7 +82,36 @@
   }
 }
 
-/* ── Gradient text utility ─── */
+/* ── Semantic helpers (use-anywhere classes) ── */
+.bg-base {
+  background-color: var(--bg-base);
+}
+
+.bg-card {
+  background-color: var(--bg-card);
+}
+
+.bg-card2 {
+  background-color: var(--bg-card2);
+}
+
+.text-prim {
+  color: var(--text-primary);
+}
+
+.text-sec {
+  color: var(--text-secondary);
+}
+
+.text-mut {
+  color: var(--text-muted);
+}
+
+.border-theme {
+  border-color: var(--border);
+}
+
+/* ── Gradient text ── */
 .gradient-text {
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
   -webkit-background-clip: text;
@@ -59,14 +126,15 @@
   background-clip: text;
 }
 
-/* ── Glassmorphism base ─── */
+/* ── Glass card ── */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--bg-glass);
+  border: 1px solid var(--border);
   backdrop-filter: blur(16px);
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-/* ── Animated background orbs ─── */
+/* ── Orbs ── */
 @keyframes orbFloat1 {
 
   0%,
@@ -123,7 +191,7 @@
   animation: orbFloat3 26s ease-in-out infinite;
 }
 
-/* ── Confidence bar transition ─── */
+/* ── Animations ── */
 .confidence-bar {
   transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -132,7 +200,6 @@
   transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Chip pop animation ─── */
 @keyframes chipPop {
   from {
     opacity: 0;
@@ -149,7 +216,6 @@
   animation: chipPop 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-/* ── Slide up animation ─── */
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -166,7 +232,6 @@
   animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Float cards ─── */
 @keyframes floatCard {
 
   0%,
@@ -191,7 +256,6 @@
   animation: floatCard 6s 4s ease-in-out infinite;
 }
 
-/* ── Badge pulse ─── */
 @keyframes badgePulse {
 
   0%,
@@ -206,4 +270,25 @@
 
 .badge-pulse-dot {
   animation: badgePulse 2.2s ease-in-out infinite;
+}
+
+/* ── Theme transition ── */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.25s;
+  transition-timing-function: ease;
+}
+
+/* Don't transition transforms/animations */
+.orb-1,
+.orb-2,
+.orb-3,
+.float-c1,
+.float-c2,
+.float-c3,
+.badge-pulse-dot,
+.spinner {
+  transition: none !important;
 }
