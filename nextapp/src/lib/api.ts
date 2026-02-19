@@ -23,8 +23,8 @@ export async function predictText(text: string): Promise<PredictionResult> {
   if (typeof window !== "undefined" && window.location.hostname === "localhost") {
     const res = await fetch(`http://localhost:5000/api/predict`, {
       method: "POST",
-      headers,
-      body,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
     });
     const data = await res.json();
     if (res.ok) return data as PredictionResult;
