@@ -4,9 +4,10 @@ import os
 import time
 import json
 
-# Ensure backend modules are importable
-BACKEND_DIR = os.path.join(os.path.dirname(__file__), "..", "backend")
-sys.path.insert(0, BACKEND_DIR)
+# Bridge to backend logic
+base_dir = os.path.dirname(__file__)
+backend_dir = os.path.join(base_dir, "_backend")
+sys.path.insert(0, backend_dir)
 
 # Try importing core logic
 try:

@@ -4,7 +4,7 @@ import sys
 
 # Bridge to backend logic
 base_dir = os.path.dirname(__file__)
-backend_dir = os.path.abspath(os.path.join(base_dir, "..", "backend"))
+backend_dir = os.path.join(base_dir, "_backend")
 sys.path.insert(0, backend_dir)
 
 try:
