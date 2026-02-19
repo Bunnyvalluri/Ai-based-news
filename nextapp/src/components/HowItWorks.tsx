@@ -1,88 +1,110 @@
 "use client";
 import React from 'react';
-import { motion } from 'framer-motion';
-
-const STEPS = [
-  {
-    kicker: "Step 01",
-    title: "Paste & Detect",
-    desc: "Simply paste any news headline, full article, or upload a text file. our system instantly prepares it for analysis.",
-    icon: (
-      <svg className="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-      </svg>
-    ),
-  },
-  {
-    kicker: "Step 02",
-    title: "Dual-Engine Analysis",
-    desc: "First, our ML algorithm scans for linguistic patterns of misinformation. Then, Gemini AI cross-references facts with global knowledge.",
-    icon: (
-      <svg className="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-      </svg>
-    ),
-  },
-  {
-    kicker: "Step 03",
-    title: "Instant Verification",
-    desc: "Receive a Real or Fake verdict with a confidence score and a detailed explanation of why the content is trustworthy or suspicious.",
-    icon: (
-      <svg className="w-8 h-8 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-  },
-];
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300">
+    <section id="how-it-works" className="py-24 bg-gradient-to-b from-indigo-50/10 to-transparent dark:from-indigo-900/10 dark:to-transparent border-t border-slate-200 dark:border-slate-800 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs font-semibold uppercase tracking-widest mb-4">
-            Methodology
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-semibold uppercase tracking-widest mb-4">
+            Pipeline
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             How TruthLens Works
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            We combine traditional Machine Learning speed with Generative AI's deep understanding
-            to provide the most accurate fake news detection available.
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium">
+            A 5-stage NLP + ML pipeline processes every article in under 3 seconds.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 md:gap-12 relative">
-          {/* Connector Line (Desktop) */}
-          <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent" aria-hidden="true" />
+        {/* Pipeline Grid - Responsive */}
+        <div className="flex flex-wrap justify-center items-stretch gap-0">
 
-          {STEPS.map((step, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2 }}
-              viewport={{ once: true }}
-              className="relative text-center group"
-            >
-              <div className="relative inline-flex items-center justify-center w-24 h-24 mb-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl dark:shadow-slate-900/50 group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-300 z-10">
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-800 rounded-2xl opacity-50" />
-                <div className="relative z-10 transform transition-transform duration-500 group-hover:rotate-12">
-                  {step.icon}
-                </div>
-              </div>
+          {/* Step 1 */}
+          <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
+            <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">01</div>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">Input &amp; Validation</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              User submits news text via web UI. Input undergoes validation: min length & format checks.
+            </p>
+          </div>
 
-              <div className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 mb-2 font-mono">
-                {step.kicker}
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
-                {step.title}
-              </h3>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed max-w-xs mx-auto">
-                {step.desc}
-              </p>
-            </motion.div>
-          ))}
+          <div className="hidden md:flex items-center justify-center text-slate-300 dark:text-slate-600 text-2xl pt-20 -mx-3">→</div>
+
+          {/* Step 2 */}
+          <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
+            <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">02</div>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#8b5cf6,#a855f7)' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <polyline points="4 7 4 4 20 4 20 7" />
+                <line x1="9" y1="20" x2="15" y2="20" />
+                <line x1="12" y1="4" x2="12" y2="20" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">NLP Preprocessing</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Text is normalized: lowercased, punctuation stripped, stop-words removed, & lemmatized.
+            </p>
+          </div>
+
+          <div className="hidden md:flex items-center justify-center text-slate-300 dark:text-slate-600 text-2xl pt-20 -mx-3">→</div>
+
+          {/* Step 3 */}
+          <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
+            <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">03</div>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#a855f7,#ec4899)' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">TF-IDF Vectorization</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Tokens converted to numerical vectors using 50K unigram+bigram features.
+            </p>
+          </div>
+
+          <div className="hidden md:flex items-center justify-center text-slate-300 dark:text-slate-600 text-2xl pt-20 -mx-3">→</div>
+
+          {/* Step 4 */}
+          <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
+            <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">04</div>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#ec4899,#f43f5e)' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">ML Classification</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Feature vector classified by best model (LR, NB, RF, SVM) with confidence scoring.
+            </p>
+          </div>
+
+          <div className="hidden md:flex items-center justify-center text-slate-300 dark:text-slate-600 text-2xl pt-20 -mx-3">→</div>
+
+          {/* Step 5 */}
+          <div className="flex-1 min-w-[200px] max-w-[240px] p-6 text-center rounded-2xl bg-white dark:bg-[#13131f] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group z-10 m-2">
+            <div className="text-xs font-bold tracking-widest text-slate-400 mb-4 font-[Space_Grotesk]">05</div>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300" style={{ background: 'linear-gradient(135deg,#f43f5e,#f97316)' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <polyline points="3 9 12 15 21 9" />
+              </svg>
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">Result &amp; Explanation</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              REAL/FAKE verdict + AI explanation returned to UI in &lt; 3 seconds.
+            </p>
+          </div>
+
         </div>
       </div>
     </section>
