@@ -10,7 +10,14 @@ const FEATURES = [
   { icon: "✨", title: "Smart Context", desc: "Gemini 1.5 checks facts against its massive knowledge base." },
 ];
 
-const TECH = ["Python 3.10", "Flask", "scikit-learn", "NLTK", "Pandas", "Next.js 14", "React", "Tailwind CSS", "Gemini AI"];
+// The user's specific tech stack
+const TECH_STACK = [
+  "Python 3.10", "Flask", "scikit-learn", "NLTK", "Pandas",
+  "Next.js 14", "React", "Tailwind CSS", "Gemini AI"
+];
+
+// Duplicate for seamless loop
+const MARQUEE_ITEMS = [...TECH_STACK, ...TECH_STACK, ...TECH_STACK];
 
 export default function About() {
   return (
@@ -34,7 +41,7 @@ export default function About() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-20">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-24">
           {FEATURES.map((f, i) => (
             <motion.div
               key={i}
@@ -57,18 +64,37 @@ export default function About() {
           ))}
         </div>
 
+        {/* Animated Tech Stack Section */}
         <div className="text-center">
-          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">Built With Modern Tech</h4>
-          <div className="flex flex-wrap justify-center gap-3">
-            {TECH.map((t, i) => (
-              <span
-                key={i}
-                className="px-4 py-2 rounded-full border border-slate-200 bg-slate-50 text-slate-600 text-sm font-medium hover:bg-white hover:border-indigo-200 hover:text-indigo-600 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-default"
-              >
-                {t}
-              </span>
-            ))}
+          <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">Built With Modern Tech</h4>
+
+          <div className="relative max-w-4xl mx-auto overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            <div className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused]">
+              {MARQUEE_ITEMS.map((tech, i) => (
+                <div
+                  key={`${tech}-${i}`}
+                  className="px-6 py-3 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm flex items-center gap-2 whitespace-nowrap hover:border-indigo-300 hover:text-indigo-600 hover:shadow-md transition-colors duration-300 cursor-default"
+                >
+                  <span className="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-indigo-400"></span>
+                  {tech}
+                </div>
+              ))}
+            </div>
           </div>
+
+          {/* Add CSS for marquee directly here or relies on globals.css extended config. 
+                I'll rely on inline style for keyframes to ensure it works without config changes 
+                if 'animate-marquee' isn't in tailwind config.
+            */}
+          <style jsx global>{`
+              @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+              }
+              .animate-marquee {
+                animation: marquee 30s linear infinite;
+              }
+            `}</style>
         </div>
       </div>
     </section>
