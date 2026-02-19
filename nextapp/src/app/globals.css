@@ -4,25 +4,10 @@
 @variant dark (&:where(.dark, .dark *));
 
 /* ────────────────────────────────────────────
-   CSS Custom Properties — Light & Dark tokens
+   CSS Custom Properties — PERMANENT DARK THEME
    ──────────────────────────────────────────── */
 :root {
-  /* Light mode */
-  --bg-base: #f0f2f8;
-  --bg-card: #ffffff;
-  --bg-card2: #f8fafc;
-  --bg-glass: rgba(255, 255, 255, 0.6);
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --border: rgba(0, 0, 0, 0.09);
-  --border-focus: rgba(99, 102, 241, 0.5);
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.05);
-  --orb-opacity: 0.12;
-}
-
-.dark {
-  /* Dark mode */
+  /* Default to Dark Mode values */
   --bg-base: #070711;
   --bg-card: #0d0d1a;
   --bg-card2: #0f0f1e;
@@ -50,13 +35,15 @@
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
+    /* Force dark background immediately */
+    background-color: var(--bg-base);
+    color: var(--text-primary);
   }
 
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
     font-family: var(--font-inter);
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
@@ -273,22 +260,6 @@
 }
 
 /* ── Theme transition ── */
-*,
-*::before,
-*::after {
-  transition-property: background-color, border-color, color, box-shadow;
-  transition-duration: 0.25s;
-  transition-timing-function: ease;
-}
-
-/* Don't transition transforms/animations */
-.orb-1,
-.orb-2,
-.orb-3,
-.float-c1,
-.float-c2,
-.float-c3,
-.badge-pulse-dot,
-.spinner {
-  transition: none !important;
+* {
+  /* Removed lengthy transition for solid feels */
 }
