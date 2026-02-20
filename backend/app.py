@@ -8,6 +8,8 @@ import sys
 import json
 import logging
 import time
+import threading
+import uuid
 from functools import wraps
 
 from flask import Flask, request, jsonify, send_from_directory, abort
@@ -81,6 +83,22 @@ except (ImportError, AttributeError):
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024  # 2MB max upload
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
 
+# ── Gemini result cache (in-memory, keyed by request_id) ────────────────────
+_gemini_cache: dict = {}   # { request_id: result_dict | None }
+_gemini_cache_lock = threading.Lock()
+
+
+def _run_gemini_background(request_id: str, text: str, label: str, confidence: float):
+    """Run Gemini analysis in a background thread and store result."""
+    try:
+        gemini_result = analyze_with_gemini(text, label, confidence)
+    except Exception as ge:
+        logger.warning(f"Gemini background error: {ge}")
+        gemini_result = {'gemini_available': False}
+    with _gemini_cache_lock:
+        _gemini_cache[request_id] = gemini_result
+    logger.info(f"Gemini background result stored for {request_id}")
+
 # ─────────────────────────────────────────────
 # Helpers
 # ─────────────────────────────────────────────
@@ -151,9 +169,10 @@ def health_check():
 @app.route('/api/predict', methods=['POST'])
 def predict_endpoint():
     """
-    Main prediction endpoint (FR-7.x).
+    Main prediction endpoint (FR-7.x) — fast path.
+    Returns ML result immediately; Gemini runs in background.
     Accepts JSON: { "text": "..." }
-    Returns:  { "label": "REAL|FAKE", "confidence": 92.3, "top_keywords": [...], ... }
+    Returns:  { "label": "REAL|FAKE", "confidence": 92.3, "request_id": "...", ... }
     """
     start_time = time.time()
 
@@ -177,31 +196,37 @@ def predict_endpoint():
         return api_response({'error': error_msg, 'code': 'INVALID_INPUT'}, 400)
 
     try:
+        # ── Fast ML prediction ──────────────────────────────────────────────
         result = predict(text)
         elapsed_ms_ml = round((time.time() - start_time) * 1000, 1)
-
-        # ── Gemini AI second-opinion analysis ──
-        gemini_start = time.time()
-        try:
-            gemini_result = analyze_with_gemini(
-                text,
-                ml_label=result['label'],
-                ml_confidence=result['confidence']
-            )
-            result['gemini'] = gemini_result
-        except Exception as ge:
-            logger.warning(f"Gemini analysis skipped: {ge}")
-            result['gemini'] = {'gemini_available': False}
-
-        elapsed_ms = round((time.time() - start_time) * 1000, 1)
-        result['response_time_ms'] = elapsed_ms
         result['ml_time_ms'] = elapsed_ms_ml
-        result['gemini_time_ms'] = round((time.time() - gemini_start) * 1000, 1)
+        result['response_time_ms'] = elapsed_ms_ml
+
+        # ── Kick off Gemini in the background ───────────────────────────────
+        request_id = str(uuid.uuid4())
+        result['request_id'] = request_id
+        result['gemini'] = {'gemini_available': False, 'pending': True}
+
+        with _gemini_cache_lock:
+            _gemini_cache[request_id] = None  # sentinel: in-progress
+
+        # Prune old cache entries (keep last 50)
+        with _gemini_cache_lock:
+            if len(_gemini_cache) > 50:
+                oldest_keys = list(_gemini_cache.keys())[:-50]
+                for k in oldest_keys:
+                    del _gemini_cache[k]
+
+        t = threading.Thread(
+            target=_run_gemini_background,
+            args=(request_id, text, result['label'], result['confidence']),
+            daemon=True
+        )
+        t.start()
 
         logger.info(
-            f"Prediction: {result['label']} ({result['confidence']}%) | "
-            f"Gemini: {result['gemini'].get('gemini_verdict','—')} | "
-            f"Total: {elapsed_ms}ms"
+            f"Fast predict: {result['label']} ({result['confidence']}%) | "
+            f"ML: {elapsed_ms_ml}ms | Gemini running in background ({request_id[:8]})"
         )
         return api_response(result)
 
@@ -212,6 +237,22 @@ def predict_endpoint():
     except Exception as e:
         logger.exception(f"Unexpected error during prediction: {e}")
         return api_response({'error': 'An internal server error occurred.', 'code': 'INTERNAL_ERROR'}, 500)
+
+
+@app.route('/api/gemini-result/<request_id>', methods=['GET'])
+def get_gemini_result(request_id: str):
+    """
+    Poll endpoint for background Gemini analysis result.
+    Returns { "ready": false } while pending, or { "ready": true, "gemini": {...} } when done.
+    """
+    with _gemini_cache_lock:
+        if request_id not in _gemini_cache:
+            return api_response({'ready': False, 'error': 'Unknown request_id'}, 404)
+        result = _gemini_cache[request_id]
+
+    if result is None:
+        return api_response({'ready': False})
+    return api_response({'ready': True, 'gemini': result})
 
 
 @app.route('/api/predict/file', methods=['POST'])
@@ -312,4 +353,14 @@ if __name__ == '__main__':
     logger.info(f"Starting AI Fake News Detector API on {HOST}:{PORT}")
     logger.info(f"Model ready: {model_is_ready()}")
     logger.info(f"Frontend dir: {FRONTEND_DIR}")
+
+    # ── Pre-warm model so first request is instant ───────────────────────────
+    if model_is_ready():
+        try:
+            from predictor import _load_artifacts
+            _load_artifacts()
+            logger.info("Model pre-warmed and ready.")
+        except Exception as e:
+            logger.warning(f"Model pre-warm failed: {e}")
+
     app.run(host=HOST, port=PORT, debug=DEBUG)

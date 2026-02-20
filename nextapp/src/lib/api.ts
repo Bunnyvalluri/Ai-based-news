@@ -54,7 +54,7 @@ export async function fetchMetrics(): Promise<MetricsData> {
 
 export async function fetchStatus(): Promise<SystemStatus> {
   try {
-    const res = await fetch(`${API_BASE}/api/status`, { cache: 'no-store' });
+    const res = await fetch(`${API_BASE}/api/status`, { cache: "no-store" });
     if (res.ok) return await res.json();
   } catch (e) {
     console.warn("Proxy status fetch failed, trying direct...", e);
@@ -62,9 +62,43 @@ export async function fetchStatus(): Promise<SystemStatus> {
 
   // Fallback for local development if proxy fails
   if (typeof window !== "undefined" && window.location.hostname === "localhost") {
-    const fallbackRes = await fetch(`http://localhost:5000/api/status`, { cache: 'no-store' });
+    const fallbackRes = await fetch(`http://localhost:5000/api/status`, {
+      cache: "no-store",
+    });
     if (fallbackRes.ok) return await fallbackRes.json();
   }
 
   throw new Error("Status unavailable");
+}
+
+/**
+ * Poll for the Gemini background result.
+ * Resolves with the gemini object once ready, or null on timeout.
+ */
+export async function pollGeminiResult(
+  requestId: string,
+  maxWaitMs = 15000,
+  intervalMs = 900
+): Promise<Record<string, unknown> | null> {
+  const base =
+    typeof window !== "undefined" && window.location.hostname === "localhost"
+      ? "http://localhost:5000"
+      : API_BASE;
+
+  const deadline = Date.now() + maxWaitMs;
+  while (Date.now() < deadline) {
+    await new Promise((r) => setTimeout(r, intervalMs));
+    try {
+      const res = await fetch(`${base}/api/gemini-result/${requestId}`, {
+        cache: "no-store",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.ready) return data.gemini as Record<string, unknown>;
+      }
+    } catch (_) {
+      // network blip, keep polling
+    }
+  }
+  return null;
 }

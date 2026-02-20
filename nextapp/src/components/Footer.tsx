@@ -45,7 +45,7 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 dark:text-slate-500">
           <div>
-            &copy; {currentYear} Rahul Valluri. All rights reserved.
+            &copy; {currentYear} Rishi & Manohar. All rights reserved.
           </div>
           <div className="flex gap-1 items-center">
             <span>Built with ❤️ using</span>

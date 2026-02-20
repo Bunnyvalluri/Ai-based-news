@@ -13,6 +13,7 @@ export interface GeminiAnalysis {
   fact_check_verdict: string;
   recommendation: string;
   gemini_available: boolean;
+  pending?: boolean;
 }
 
 export interface PredictionResult {
@@ -26,6 +27,7 @@ export interface PredictionResult {
   response_time_ms: number;
   ml_time_ms?: number;
   gemini_time_ms?: number;
+  request_id?: string;
   gemini?: GeminiAnalysis;
 }
 

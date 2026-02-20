@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { predictText, predictFile } from "@/lib/api";
+import { predictText, predictFile, pollGeminiResult } from "@/lib/api";
 import type { PredictionResult, TabType } from "@/lib/types";
 import ResultPanel from "./ResultPanel";
 
@@ -27,6 +27,8 @@ export default function Detector({
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [geminiLoading, setGeminiLoading] = useState(false);
+  const [loadingStep, setLoadingStep] = useState("");
   const [error, setError] = useState("");
   const [result, setResult] = useState<PredictionResult | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -40,19 +42,33 @@ export default function Detector({
     if (!text.trim()) { setError("Please enter a news article or headline."); return; }
     if (text.trim().length < 20) { setError("Input too short — please provide at least 20 characters."); return; }
     setLoading(true);
+    setLoadingStep("Running ML classifier…");
     const announce = document.getElementById("a11y-announcer");
     if (announce) announce.textContent = "Analyzing content, please wait.";
 
     try {
       const data = await predictText(text);
       setResult(data);
+      setLoading(false);
+      setLoadingStep("");
       if (announce) announce.textContent = "Analysis complete. Viewing results below.";
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+
+      // Poll for Gemini in background
+      if (data.request_id) {
+        setGeminiLoading(true);
+        pollGeminiResult(data.request_id).then((gemini) => {
+          setGeminiLoading(false);
+          if (gemini) {
+            setResult((prev) => prev ? { ...prev, gemini: gemini as unknown as PredictionResult["gemini"] } : prev);
+          }
+        });
+      }
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Failed to connect to the server.");
       if (announce) announce.textContent = "Analysis failed. Error: " + (e instanceof Error ? e.message : "unknown error");
-    } finally {
       setLoading(false);
+      setLoadingStep("");
     }
   }, [text]);
 
@@ -201,7 +217,7 @@ export default function Detector({
                         <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                           <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
                         </svg>
-                        <span>Analyzing with AI…</span>
+                        <span>{loadingStep || "Analyzing with AI…"}</span>
                       </>
                     ) : (
                       <>
@@ -212,6 +228,18 @@ export default function Detector({
                       </>
                     )}
                   </button>
+
+                  {/* Animated progress bar */}
+                  {loading && (
+                    <div className="mt-3 w-full h-1.5 rounded-full bg-indigo-100 dark:bg-indigo-900/40 overflow-hidden">
+                      <motion.div
+                        className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"
+                        initial={{ width: "0%" }}
+                        animate={{ width: "85%" }}
+                        transition={{ duration: 1.8, ease: "easeOut" }}
+                      />
+                    </div>
+                  )}
                 </motion.div>
               )}
 
@@ -286,7 +314,8 @@ export default function Detector({
             {result && (
               <ResultPanel
                 result={result}
-                onReset={() => setResult(null)}
+                geminiLoading={geminiLoading}
+                onReset={() => { setResult(null); setGeminiLoading(false); }}
               />
             )}
           </AnimatePresence>
